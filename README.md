@@ -1,2 +1,2 @@
-# Intersection-simulator
-Simulator for the intersection project SDM
+# Intersection-Simulator
+Simulator for the intersectin project SDM
