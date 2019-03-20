@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { Paho } from 'ng2-mqtt/mqttws31';
+import { Car } from '../car/car';
+import { Ground } from '../ground/ground';
+import { Road } from '../road/road'
+import { TrafficLight } from '../trafficLight/traffic-light'
+import { Sensor } from '../sensor/sensor'
+import { StopLine } from '../StopLine/stop-line'
+import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-world',
@@ -17,15 +24,21 @@ export class WorldComponent implements OnInit {
 }
 
 var camera, scene, renderer;
-var groundGeometry, groundMaterial, groundMesh;
-var roadGeometry, roadMaterial, roadMesh;
-var carGeometry, carMaterial, carMesh;
-var trafficLightGeometry, trafficLightMaterial, trafficLightMesh;
-var sensorGeometry, sensorMaterial, sensorMesh;
-var stopLineGeometry, stopLineMaterial, stopLineMesh;
-var trafficLightMode = 0;
 var sensorCurrent = 0;
 var connected = false;
+var grass;
+
+var road;
+var car1;
+var trafficLight1;
+var sensor1;
+var stopLine1;
+
+var road2;
+var car2;
+var trafficLight2;
+var sensor2;
+var stopLine2;
 
 var clock = new THREE.Clock(true);
 
@@ -33,7 +46,7 @@ init();
 animate();
 
 function setMode(mode) {
-  trafficLightMode = mode;
+  trafficLight1.setMode = mode;
 }
 
 function init() {
@@ -45,44 +58,45 @@ function init() {
   scene = new THREE.Scene();
 
   //Ground
-  groundGeometry = new THREE.PlaneGeometry(2, 1);
-  groundMaterial = new THREE.MeshBasicMaterial({ color: 0x006400 });
-  groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-  scene.add(groundMesh);
+  grass = new Ground(2, 1, 0x006400);
+  scene.add(grass.getMesh);
 
   //Road
-  roadGeometry = new THREE.BoxGeometry(2, 0.2, 0.01);
-  roadMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
-  roadMesh = new THREE.Mesh(roadGeometry, roadMaterial);
-  scene.add(roadMesh);
+  road = new Road(2, 0.2, 0.01,0x808080)
+  scene.add(road.getMesh);
+
+  road2 = new Road(0.2, 1, 0.01,0x808080)
+  scene.add(road2.getMesh);
 
   //Car
-  carGeometry = new THREE.BoxGeometry(0.1, 0.05, 0.05);
-  carMaterial = new THREE.MeshBasicMaterial({ color: 0xff69b4 });
-  carMesh = new THREE.Mesh(carGeometry, carMaterial);
-  scene.add(carMesh);
-  carMesh.position.set(0.9, 0.0, 0.01);
+  car1 = new Car(0.9, 0.0, 0.01);
+  scene.add(car1.getMesh);
+
+  car2 = new Car(0.0, -0.5, 0.01);
+  car2.getMesh.rotateZ(1.58);
+  scene.add(car2.getMesh);
 
   //TrafficLight
-  trafficLightGeometry = new THREE.BoxGeometry(0.02, 0.02, 0.02);
-  trafficLightMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  trafficLightMesh = new THREE.Mesh(trafficLightGeometry, trafficLightMaterial);
-  scene.add(trafficLightMesh);
-  trafficLightMesh.position.set(0, 0, 0.1);
+  trafficLight1 = new TrafficLight(0.1, 0, 0.1, 1)
+  scene.add(trafficLight1.getMesh);
 
-  //TrafficLight
-  sensorGeometry = new THREE.BoxGeometry(0.02, 0.02, 0.02);
-  sensorMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-  sensorMesh = new THREE.Mesh(sensorGeometry, sensorMaterial);
-  scene.add(sensorMesh);
-  sensorMesh.position.set(0.20, 0, 0);
+  trafficLight2 = new TrafficLight(-0.1, -0.1, 0.1, 2)
+  scene.add(trafficLight2.getMesh);
 
-  //TrafficLight
-  stopLineGeometry = new THREE.BoxGeometry(0.015, 0.1, 0.02);
-  stopLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-  stopLineMesh = new THREE.Mesh(stopLineGeometry, stopLineMaterial);
-  scene.add(stopLineMesh);
-  stopLineMesh.position.set(0.14, 0, 0);
+  //Sensor
+  sensor1 = new Sensor(0.20, 0, 0, 1);
+  scene.add(sensor1.getMesh);
+
+  sensor2 = new Sensor(0, -0.2, 0, 2);
+  scene.add(sensor2.getMesh);
+
+  //StopLine
+  stopLine1 = new StopLine(0.14, 0, 0);
+  scene.add(stopLine1.getMesh);
+
+  stopLine2 = new StopLine(0, -0.14, 0);
+  stopLine2.getMesh.rotateZ(1.58);
+  scene.add(stopLine2.getMesh);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -97,11 +111,11 @@ function animate() {
   renderer.render(scene, camera);
 
   if (connected) {
-    if ((Math.abs(carMesh.position.x - sensorMesh.position.x)) < 0.1 && sensorCurrent != 1) {
+    if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensorCurrent != 1) {
       sendMessage("1");
       sensorCurrent = 1;
     }
-    if((Math.abs(carMesh.position.x - sensorMesh.position.x)) >= 0.1 && sensorCurrent != 0){
+    if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensorCurrent != 0){
       if (sensorCurrent != 0) {
         sendMessage("0");
         sensorCurrent = 0;
@@ -109,22 +123,30 @@ function animate() {
     }
   }
 
-  if ((Math.abs(carMesh.position.x - trafficLightMesh.position.x) > 0.2) || trafficLightMode == 0) {
-    carMesh.translateX(-0.01);
+  if ((Math.abs(car1.getMesh.position.x - trafficLight1.getMesh.position.x) > 0.2) || trafficLight1.getMode == 0) {
+    car1.getMesh.translateX(-0.01);
   }
 
-  if (carMesh.position.x < -1) {
-    carMesh.position.x = 0.9;
+  if (car1.getMesh.position.x < -1) {
+    car1.getMesh.position.x = 0.9;
   }
 
-  if (trafficLightMode == 0) {
-    trafficLightMesh.material.color.setHex(0x00ff00);
+  if ((Math.abs(car2.getMesh.position.y - trafficLight2.getMesh.position.y) > 0.2) || trafficLight2.getMode == 0) {
+    car2.getMesh.translateX(0.01);
   }
-  if(trafficLightMode == 1) {
-    trafficLightMesh.material.color.setHex(0xffa500);
+
+  if (car2.getMesh.position.y > 0.5) {
+    car2.getMesh.position.set(0.0, -0.5, 0.01);
   }
-  if(trafficLightMode == 2) {
-    trafficLightMesh.material.color.setHex(0xff0000);
+
+  if (trafficLight1.getMode == 0) {
+    trafficLight1.getMesh.material.color.setHex(0x00ff00);
+  }
+  if(trafficLight1.getMode == 1) {
+    trafficLight1.getMesh.material.color.setHex(0xffa500);
+  }
+  if(trafficLight1.getMode == 2) {
+    trafficLight1.getMesh.material.color.setHex(0xff0000);
   }
 }
 
@@ -148,7 +170,7 @@ function onConnect() {
   };
 
   console.log("onConnect");
-  client.subscribe("8/motor_vehicle/1/light/1", subscribeOptions);
+  client.subscribe("8/#", subscribeOptions);
   sendMessage("1");
   connected = true;
 }
@@ -169,5 +191,6 @@ function sendMessage(messageText) {
 // called when a message arrives
 function onMessageArrived(message) {
   console.log("onMessageArrived:" + message.payloadString);
+  console.log("topic:" + message.topic);
   setMode(Number(message.payloadString));
 }
