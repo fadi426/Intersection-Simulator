@@ -8,6 +8,7 @@ export class TrafficLight {
         let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.position.set(this._x, this._y, this._z);
+        this._mode = 0;
     }
 
     public get getMesh(){
