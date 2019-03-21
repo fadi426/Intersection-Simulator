@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
-//import { Paho } from 'ng2-mqtt/mqttws31';
+import { Paho } from 'ng2-mqtt/mqttws31';
 import { Car } from '../car/car';
 import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
 import { TrafficLight } from '../trafficLight/traffic-light'
 import { Sensor } from '../sensor/sensor'
 import { StopLine } from '../StopLine/stop-line'
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 import { Mqtt } from '../mqtt/mqtt';
+import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-world',
@@ -26,8 +26,8 @@ export class WorldComponent implements OnInit {
 
 var camera, scene, renderer;
 var mqtt;
+var mqttMessage = null;
 var sensorCurrent = 0;
-var connected = false;
 var grass;
 
 var road;
@@ -49,6 +49,7 @@ animate();
 
 function setMode(mode) {
   trafficLight1.setMode = mode;
+  mqtt.setMessage(null);
 }
 
 function init() {
@@ -60,7 +61,7 @@ function init() {
   scene = new THREE.Scene();
 
   //MQTT
-  mqtt = new Mqtt();
+  mqtt = new Mqtt("3478945836457", "8/motor_vehicle/1/light/1");
 
   //Ground
   grass = new Ground(2, 1, 0x006400);
@@ -111,11 +112,15 @@ function init() {
 
 function animate() {
 
+  if(mqtt.getMessage != null){
+    setMode(mqtt.getMessage);
+  }
+
   requestAnimationFrame(animate);
 
   renderer.render(scene, camera);
 
-  if (connected) {
+  if (mqtt.getConnected) {
     if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensorCurrent != 1) {
       mqtt.sendMessage("1");
       sensorCurrent = 1;

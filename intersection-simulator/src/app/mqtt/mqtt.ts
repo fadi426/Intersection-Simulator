@@ -2,45 +2,63 @@ import { Paho } from 'ng2-mqtt/mqttws31';
 
 export class Mqtt {
     private _client: Paho.MQTT.Client;
-    private connected: any;
+    private _connected: boolean;
+    private _subscribeOptions: any;
+    private _message = null;
 
-    constructor() {
-        this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", "3478945836457");
+    constructor(private _clientId: string, private _groupId: string) {
+        this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId);
+        //this._message = null;
+        this.onConnectionLost();
+        this.onMessageArrived();
+        this.connect();
+    }
 
-        this._client.onConnectionLost = this.onConnectionLost;
-        this._client.onMessageArrived = this.onMessageArrived;
+    public get getConnected() {
+        return this._connected;
+    }
 
-        this._client.connect({ onSuccess: this.onConnect });
+    public get getMessage() {
+        return this._message;
+    }
+
+    public setMessage(value) {
+        this._message = value;
+    }
+
+    public connect() {
+        this._client.connect({ onSuccess: this.onConnect.bind(this) });
     }
 
     public onConnect() {
-        // Once a connection has been made, make a subscription and send a message.
+        console.log("Connected");
         var subscribeOptions = {
-          qos: 1,  // QoS
-          invocationContext: { foo: true },  // Passed to success / failure callback
+            qos: 0,  // QoS
+            invocationContext: { foo: true },  // Passed to success / failure callback
         };
-      
-        console.log("onConnect");
-        this._client.subscribe("8/#", subscribeOptions);
-        this.sendMessage("1");
-        this.connected = true;
-      }
+        this._client.subscribe(this._groupId, subscribeOptions);
+        this.sendMessage('1');
+        this._connected = true;
+    }
 
-    public onConnectionLost(responseObject) {
-        if (responseObject.errorCode !== 0) {
-            console.log("onConnectionLost:" + responseObject.errorMessage);
+    public sendMessage(value: string) {
+        if(this._connected == true){
+        let message = new Paho.MQTT.Message(value);
+        message.destinationName = this._groupId;
+        this._client.send(message);
         }
     }
 
-    public sendMessage(messageText) {
-        var message = new Paho.MQTT.Message(messageText);
-        message.destinationName = "8/motor_vehicle/1/sensor/1";
-        this._client.send(message);
-      }
+    public onMessageArrived() {
+        this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
+            console.log('Message arrived : ' + message.payloadString);
+            this._message = message.payloadString;
+        };
+    }
 
-    public onMessageArrived(message) {
-        console.log("onMessageArrived:" + message.payloadString);
-        console.log("topic:" + message.topic);
-        //setMode(Number(message.payloadString));
+    public onConnectionLost() {
+        this._client.onConnectionLost = (responseObject: Object) => {
+            console.log('Connection lost : ' + JSON.stringify(responseObject));
+        };
     }
 }
