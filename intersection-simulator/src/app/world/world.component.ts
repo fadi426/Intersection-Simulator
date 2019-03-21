@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import { Paho } from 'ng2-mqtt/mqttws31';
+//import { Paho } from 'ng2-mqtt/mqttws31';
 import { Car } from '../car/car';
 import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
@@ -8,6 +8,7 @@ import { TrafficLight } from '../trafficLight/traffic-light'
 import { Sensor } from '../sensor/sensor'
 import { StopLine } from '../StopLine/stop-line'
 import { transformAll } from '@angular/compiler/src/render3/r3_ast';
+import { Mqtt } from '../mqtt/mqtt';
 
 @Component({
   selector: 'app-world',
@@ -24,6 +25,7 @@ export class WorldComponent implements OnInit {
 }
 
 var camera, scene, renderer;
+var mqtt;
 var sensorCurrent = 0;
 var connected = false;
 var grass;
@@ -56,6 +58,9 @@ function init() {
   camera.rotation.x = 0.6;
 
   scene = new THREE.Scene();
+
+  //MQTT
+  mqtt = new Mqtt();
 
   //Ground
   grass = new Ground(2, 1, 0x006400);
@@ -112,12 +117,12 @@ function animate() {
 
   if (connected) {
     if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensorCurrent != 1) {
-      sendMessage("1");
+      mqtt.sendMessage("1");
       sensorCurrent = 1;
     }
     if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensorCurrent != 0){
       if (sensorCurrent != 0) {
-        sendMessage("0");
+        mqtt.sendMessage("0");
         sensorCurrent = 0;
       }
     }
@@ -150,47 +155,47 @@ function animate() {
   }
 }
 
-// Create a client instance
-var client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", "clientId");
+// // Create a client instance
+// var client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", "clientId");
 
-// set callback handlers
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
+// // set callback handlers
+// client.onConnectionLost = onConnectionLost;
+// client.onMessageArrived = onMessageArrived;
 
-// connect the client
-client.connect({ onSuccess: onConnect });
+// // connect the client
+// client.connect({ onSuccess: onConnect });
 
 
-// called when the client connects
-function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  var subscribeOptions = {
-    qos: 0,  // QoS
-    invocationContext: { foo: true },  // Passed to success / failure callback
-  };
+// // called when the client connects
+// function onConnect() {
+//   // Once a connection has been made, make a subscription and send a message.
+//   var subscribeOptions = {
+//     qos: 0,  // QoS
+//     invocationContext: { foo: true },  // Passed to success / failure callback
+//   };
 
-  console.log("onConnect");
-  client.subscribe("8/#", subscribeOptions);
-  sendMessage("1");
-  connected = true;
-}
+//   console.log("onConnect");
+//   client.subscribe("8/#", subscribeOptions);
+//   sendMessage("1");
+//   connected = true;
+// }
 
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
-  }
-}
+// // called when the client loses its connection
+// function onConnectionLost(responseObject) {
+//   if (responseObject.errorCode !== 0) {
+//     console.log("onConnectionLost:" + responseObject.errorMessage);
+//   }
+// }
 
-function sendMessage(messageText) {
-  var message = new Paho.MQTT.Message(messageText);
-  message.destinationName = "8/motor_vehicle/1/sensor/1";
-  client.send(message);
-}
+// function sendMessage(messageText) {
+//   var message = new Paho.MQTT.Message(messageText);
+//   message.destinationName = "8/motor_vehicle/1/sensor/1";
+//   client.send(message);
+// }
 
-// called when a message arrives
-function onMessageArrived(message) {
-  console.log("onMessageArrived:" + message.payloadString);
-  console.log("topic:" + message.topic);
-  setMode(Number(message.payloadString));
-}
+// // called when a message arrives
+// function onMessageArrived(message) {
+//   console.log("onMessageArrived:" + message.payloadString);
+//   console.log("topic:" + message.topic);
+//   setMode(Number(message.payloadString));
+// }
