@@ -166,7 +166,7 @@ function animate() {
   }
 
   if ((Math.abs(car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > 0.2) || trafficLightArr[1].getMode == 0) {
-    car2.getMesh.translateX(0.001);
+    car2.getMesh.translateX(0.007);
   }
 
   if (car2.getMesh.position.y > 0.5) {
