@@ -5,6 +5,7 @@ export class Mqtt {
     private _connected: boolean;
     private _subscribeOptions: any;
     private _message = null;
+    private _destination = null;
 
     constructor(private _clientId: string, private _groupId: string) {
         this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId);
@@ -22,7 +23,18 @@ export class Mqtt {
         return this._message;
     }
 
-    public setMessage(value) {
+    public get getDestination(){
+        if(this._destination == null)
+        return "-1";
+        else
+        return this._destination;
+    }
+
+    public setDestination(value : string){
+        this._destination = value;
+    }
+
+    public setMessage(value : string) {
         this._message = value;
     }
 
@@ -37,22 +49,24 @@ export class Mqtt {
             invocationContext: { foo: true },  // Passed to success / failure callback
         };
         this._client.subscribe(this._groupId, subscribeOptions);
-        this.sendMessage('1');
+        //this.sendMessage('1');
         this._connected = true;
     }
 
-    public sendMessage(value: string) {
-        if(this._connected == true){
-        let message = new Paho.MQTT.Message(value);
-        message.destinationName = this._groupId;
+    public sendMessage(msg : string, des: string) {
+        let message = new Paho.MQTT.Message(msg);
+        message.destinationName = des;
         this._client.send(message);
-        }
     }
 
     public onMessageArrived() {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
-            console.log('Message arrived : ' + message.payloadString);
-            this._message = message.payloadString;
+            if(message.destinationName.includes("light")){
+                console.log('Message arrived : ' + message.payloadString);
+                this._message = message.payloadString;
+                this._destination =  message.destinationName;
+                console.log(message.destinationName + " " + message.payloadString);
+            }
         };
     }
 

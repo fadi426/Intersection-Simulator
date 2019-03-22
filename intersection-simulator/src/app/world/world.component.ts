@@ -42,14 +42,23 @@ var trafficLight2;
 var sensor2;
 var stopLine2;
 
+var trafficLightArr = [];
+var sensorArr = [];
+
 var clock = new THREE.Clock(true);
 
 init();
 animate();
 
 function setMode(mode) {
-  trafficLight1.setMode = mode;
-  mqtt.setMessage(null);
+  trafficLightArr.forEach(trafficLight => {
+    if(trafficLight.getId == mqtt.getDestination.charAt(16))
+    {
+      trafficLight.setMode = mode;
+      mqtt.setMessage(null);
+      mqtt.setDestination(null);
+    }
+  });
 }
 
 function init() {
@@ -61,7 +70,7 @@ function init() {
   scene = new THREE.Scene();
 
   //MQTT
-  mqtt = new Mqtt("3478945836457", "8/motor_vehicle/1/light/1");
+  mqtt = new Mqtt("3478945836457", "8/#");
 
   //Ground
   grass = new Ground(2, 1, 0x006400);
@@ -83,11 +92,15 @@ function init() {
   scene.add(car2.getMesh);
 
   //TrafficLight
-  trafficLight1 = new TrafficLight(0.1, 0, 0.1, 1)
-  scene.add(trafficLight1.getMesh);
+  trafficLight1 = new TrafficLight(0.1, 0, 0.1, 1);
+  trafficLightArr.push(trafficLight1);
+  scene.add(trafficLightArr[0].getMesh);
 
-  trafficLight2 = new TrafficLight(-0.1, -0.1, 0.1, 2)
-  scene.add(trafficLight2.getMesh);
+  trafficLight2 = new TrafficLight(-0.1, -0.1, 0.1, 2);
+  trafficLightArr.push(trafficLight2);
+  scene.add(trafficLightArr[1].getMesh);
+
+ 
 
   //Sensor
   sensor1 = new Sensor(0.20, 0, 0, 1);
@@ -121,43 +134,47 @@ function animate() {
   renderer.render(scene, camera);
 
   if (mqtt.getConnected) {
-    if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensorCurrent != 1) {
-      mqtt.sendMessage("1");
-      sensorCurrent = 1;
+    if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensor1.getSensorValue != 1) {
+      mqtt.sendMessage("1", "8/motor_vehicle/1/sensor/1");
+      sensor1.setSensorValue = 1;
     }
-    if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensorCurrent != 0){
-      if (sensorCurrent != 0) {
-        mqtt.sendMessage("0");
-        sensorCurrent = 0;
+    if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensor1.getSensorValue != 0){
+      if (sensor1.getSensorValue != 0) {
+        mqtt.sendMessage("0", "8/motor_vehicle/1/sensor/1");
+        sensor1.setSensorValue = 0;
+      }
+    }
+
+    if ((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) < 0.1 && sensor2.getSensorValue != 1) {
+      mqtt.sendMessage("1", "8/motor_vehicle/2/sensor/1");
+      sensor2.setSensorValue = 1;
+    }
+    if((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) >= 0.1 && sensor2.getSensorValue != 0){
+      if (sensor2.getSensorValue != 0) {
+        mqtt.sendMessage("0", "8/motor_vehicle/2/sensor/1");
+        sensor2.setSensorValue = 0;
       }
     }
   }
 
-  if ((Math.abs(car1.getMesh.position.x - trafficLight1.getMesh.position.x) > 0.2) || trafficLight1.getMode == 0) {
-    car1.getMesh.translateX(-0.01);
+  if ((Math.abs(car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.2) || trafficLightArr[0].getMode == 0) {
+    car1.getMesh.translateX(-0.008);
   }
 
   if (car1.getMesh.position.x < -1) {
     car1.getMesh.position.x = 0.9;
   }
 
-  if ((Math.abs(car2.getMesh.position.y - trafficLight2.getMesh.position.y) > 0.2) || trafficLight2.getMode == 0) {
-    car2.getMesh.translateX(0.01);
+  if ((Math.abs(car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > 0.2) || trafficLightArr[1].getMode == 0) {
+    car2.getMesh.translateX(0.001);
   }
 
   if (car2.getMesh.position.y > 0.5) {
     car2.getMesh.position.set(0.0, -0.5, 0.01);
   }
 
-  if (trafficLight1.getMode == 0) {
-    trafficLight1.getMesh.material.color.setHex(0x00ff00);
-  }
-  if(trafficLight1.getMode == 1) {
-    trafficLight1.getMesh.material.color.setHex(0xffa500);
-  }
-  if(trafficLight1.getMode == 2) {
-    trafficLight1.getMesh.material.color.setHex(0xff0000);
-  }
+  trafficLightArr[0].changeColor();
+  trafficLightArr[1].changeColor();
 }
 
 // // Create a client instance
@@ -180,7 +197,7 @@ function animate() {
 //   };
 
 //   console.log("onConnect");
-//   client.subscribe("8/#", subscribeOptions);
+//   client.subscribe("8/motor_vehicle/1/light/1", subscribeOptions);
 //   sendMessage("1");
 //   connected = true;
 // }

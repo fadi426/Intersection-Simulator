@@ -26,4 +26,16 @@ export class TrafficLight {
     public set setMode(value){
         this._mode = value;
     }
+
+    public changeColor(){
+        if (this._mode == 0) {
+            this._mesh.material.color.setHex(0x00ff00);
+        }
+        if(this._mode == 1) {
+            this._mesh.material.color.setHex(0xffa500);
+        }
+        if(this._mode == 2) {
+            this._mesh.material.color.setHex(0xff0000);
+        }
+    }
 }

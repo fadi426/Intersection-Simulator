@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 export class Sensor {
     private _mesh : any;
-    private _sensorValue : number;
+    private _sensorValue = 0;
 
     constructor(private _x : number, private _y : number, private _z : number, private _id : number){
         let geometry = new THREE.BoxGeometry(0.02, 0.02, 0.02);
