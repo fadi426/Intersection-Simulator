@@ -69,8 +69,10 @@ function init() {
 
   scene = new THREE.Scene();
 
+  var person = prompt("Please enter the groupID", "groupID");
+
   //MQTT
-  mqtt = new Mqtt("3478945836457", "8/#");
+  mqtt = new Mqtt("3478945836457", person + "/#");
 
   //Ground
   grass = new Ground(2, 1, 0x006400);
@@ -120,7 +122,6 @@ function init() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
-
 }
 
 function animate() {
