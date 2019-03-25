@@ -26,6 +26,7 @@ export class WorldComponent implements OnInit {
 
 var camera, scene, renderer;
 var mqtt;
+var groupID;
 var mqttMessage = null;
 var sensorCurrent = 0;
 var grass;
@@ -69,10 +70,10 @@ function init() {
 
   scene = new THREE.Scene();
 
-  var person = prompt("Please enter the groupID", "groupID");
+  groupID = prompt("Please enter the groupID", "8");
 
   //MQTT
-  mqtt = new Mqtt("3478945836457", person + "/#");
+  mqtt = new Mqtt("3478945836457", groupID + "/#");
 
   //Ground
   grass = new Ground(2, 1, 0x006400);
@@ -136,39 +137,47 @@ function animate() {
 
   if (mqtt.getConnected) {
     if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensor1.getSensorValue != 1) {
-      mqtt.sendMessage("1", "8/motor_vehicle/1/sensor/1");
+      mqtt.sendMessage("1", groupID + "/motor_vehicle/1/sensor/1");
       sensor1.setSensorValue = 1;
     }
     if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensor1.getSensorValue != 0){
       if (sensor1.getSensorValue != 0) {
-        mqtt.sendMessage("0", "8/motor_vehicle/1/sensor/1");
+        mqtt.sendMessage("0", groupID + "/motor_vehicle/1/sensor/1");
         sensor1.setSensorValue = 0;
       }
     }
 
     if ((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) < 0.1 && sensor2.getSensorValue != 1) {
-      mqtt.sendMessage("1", "8/motor_vehicle/2/sensor/1");
+      mqtt.sendMessage("1", groupID + "/motor_vehicle/2/sensor/1");
       sensor2.setSensorValue = 1;
     }
     if((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) >= 0.1 && sensor2.getSensorValue != 0){
       if (sensor2.getSensorValue != 0) {
-        mqtt.sendMessage("0", "8/motor_vehicle/2/sensor/1");
+        mqtt.sendMessage("0", groupID + "/motor_vehicle/2/sensor/1");
         sensor2.setSensorValue = 0;
       }
     }
   }
 
-  if ((Math.abs(car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.2) || trafficLightArr[0].getMode == 0) {
-    car1.getMesh.translateX(-0.008);
+  if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 0) {
+    car1.getMesh.translateX(-0.004);
   }
+
+  // if ((Math.abs(car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.2) || trafficLightArr[0].getMode == 0) {
+  //   car1.getMesh.translateX(-0.008);
+  // }
 
   if (car1.getMesh.position.x < -1) {
     car1.getMesh.position.x = 0.9;
   }
 
-  if ((Math.abs(car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > 0.2) || trafficLightArr[1].getMode == 0) {
-    car2.getMesh.translateX(0.007);
+  if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 0) {
+    car2.getMesh.translateX(0.004);
   }
+
+  // if ((Math.abs(car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > 0.2) || trafficLightArr[1].getMode == 0) {
+  //   car2.getMesh.translateX(0.007);
+  // }
 
   if (car2.getMesh.position.y > 0.5) {
     car2.getMesh.position.set(0.0, -0.5, 0.01);
