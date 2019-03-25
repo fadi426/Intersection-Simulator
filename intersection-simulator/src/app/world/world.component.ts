@@ -159,7 +159,7 @@ function animate() {
     }
   }
 
-  if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 0) {
+  if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 2) {
     car1.getMesh.translateX(-0.004);
   }
 
@@ -171,7 +171,7 @@ function animate() {
     car1.getMesh.position.x = 0.9;
   }
 
-  if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 0) {
+  if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 2) {
     car2.getMesh.translateX(0.004);
   }
 

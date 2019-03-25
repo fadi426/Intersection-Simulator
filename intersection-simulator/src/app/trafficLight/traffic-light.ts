@@ -8,7 +8,7 @@ export class TrafficLight {
         let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.position.set(this._x, this._y, this._z);
-        this._mode = 2;
+        this._mode = 0;
     }
 
     public get getMesh(){
@@ -29,13 +29,13 @@ export class TrafficLight {
 
     public changeColor(){
         if (this._mode == 0) {
-            this._mesh.material.color.setHex(0x00ff00);
+            this._mesh.material.color.setHex(0xff0000);
         }
         if(this._mode == 1) {
             this._mesh.material.color.setHex(0xffa500);
         }
         if(this._mode == 2) {
-            this._mesh.material.color.setHex(0xff0000);
+            this._mesh.material.color.setHex(0x00ff00);
         }
     }
 }
