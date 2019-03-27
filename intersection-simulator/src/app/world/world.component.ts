@@ -87,11 +87,9 @@ function init() {
   scene.add(road2.getMesh);
 
   //Car
-  car1 = new Car(0.9, 0.0, 0.01);
+  car1 = new Car();
+  car2 = new Car();
   scene.add(car1.getMesh);
-
-  car2 = new Car(0.0, -0.5, 0.01);
-  car2.getMesh.rotateZ(1.58);
   scene.add(car2.getMesh);
 
   //TrafficLight
@@ -159,24 +157,19 @@ function animate() {
     }
   }
 
-  if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 2) {
-    car1.getMesh.translateX(-0.004);
-  }
+  car1.move(trafficLightArr);
+  car2.move(trafficLightArr);
 
-  // if ((Math.abs(car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.2) || trafficLightArr[0].getMode == 0) {
-  //   car1.getMesh.translateX(-0.008);
+  // if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 2) {
+  //   car1.getMesh.translateX(-0.004);
   // }
 
   if (car1.getMesh.position.x < -1) {
     car1.getMesh.position.x = 0.9;
   }
 
-  if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 2) {
-    car2.getMesh.translateX(0.004);
-  }
-
-  // if ((Math.abs(car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > 0.2) || trafficLightArr[1].getMode == 0) {
-  //   car2.getMesh.translateX(0.007);
+  // if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 2) {
+  //   car2.getMesh.translateX(0.004);
   // }
 
   if (car2.getMesh.position.y > 0.5) {
