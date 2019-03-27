@@ -30,6 +30,9 @@ var groupID;
 var mqttMessage = null;
 var sensorCurrent = 0;
 var grass;
+var carArr = [];
+var names = 1;
+var carCreatorCounter = 0;
 
 var road;
 var car1;
@@ -87,10 +90,12 @@ function init() {
   scene.add(road2.getMesh);
 
   //Car
-  car1 = new Car();
-  car2 = new Car();
-  scene.add(car1.getMesh);
-  scene.add(car2.getMesh);
+  // car1 = new Car(names++);
+  // car2 = new Car(names++);
+  // carArr.push(car1);
+  // carArr.push(car2);
+  // scene.add(car1.getMesh);
+  // scene.add(car2.getMesh);
 
   //TrafficLight
   trafficLight1 = new TrafficLight(0.1, 0, 0.1, 1);
@@ -101,13 +106,13 @@ function init() {
   trafficLightArr.push(trafficLight2);
   scene.add(trafficLightArr[1].getMesh);
 
- 
-
   //Sensor
-  sensor1 = new Sensor(0.20, 0, 0, 1);
+  sensor1 = new Sensor(0.20, 0, 0, 1, 1);
+  sensorArr.push(sensor1);
   scene.add(sensor1.getMesh);
 
-  sensor2 = new Sensor(0, -0.2, 0, 2);
+  sensor2 = new Sensor(0, -0.2, 0, 2, 2);
+  sensorArr.push(sensor2);
   scene.add(sensor2.getMesh);
 
   //StopLine
@@ -118,6 +123,7 @@ function init() {
   stopLine2.getMesh.rotateZ(1.58);
   scene.add(stopLine2.getMesh);
 
+  //Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -133,94 +139,41 @@ function animate() {
 
   renderer.render(scene, camera);
 
-  if (mqtt.getConnected) {
-    if ((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) < 0.1 && sensor1.getSensorValue != 1) {
-      mqtt.sendMessage("1", groupID + "/motor_vehicle/1/sensor/1");
-      sensor1.setSensorValue = 1;
-    }
-    if((Math.abs(car1.getMesh.position.x - sensor1.getMesh.position.x)) >= 0.1 && sensor1.getSensorValue != 0){
-      if (sensor1.getSensorValue != 0) {
-        mqtt.sendMessage("0", groupID + "/motor_vehicle/1/sensor/1");
-        sensor1.setSensorValue = 0;
+  if(mqtt.getConnected){
+    sensorArr.forEach(sensor => {
+      let triggered = false;
+      carArr.forEach(car => {
+        if((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
+          triggered = true;
+        }
+      });
+      if(triggered && sensor.getSensorValue == 0){
+        mqtt.sendMessage("1", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/1");
+        sensor.setSensorValue = 1;
       }
-    }
+      if(!triggered && sensor.getSensorValue == 1){
+        mqtt.sendMessage("0", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/1");
+        sensor.setSensorValue = 0;
+      }
+    });
+  }
 
-    if ((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) < 0.1 && sensor2.getSensorValue != 1) {
-      mqtt.sendMessage("1", groupID + "/motor_vehicle/2/sensor/1");
-      sensor2.setSensorValue = 1;
-    }
-    if((Math.abs(car2.getMesh.position.y - sensor2.getMesh.position.y)) >= 0.1 && sensor2.getSensorValue != 0){
-      if (sensor2.getSensorValue != 0) {
-        mqtt.sendMessage("0", groupID + "/motor_vehicle/2/sensor/1");
-        sensor2.setSensorValue = 0;
-      }
+  for(let i = carArr.length - 1; i > -1; i--){
+    carArr[i].move(trafficLightArr, carArr);
+    if(carArr[i].getReachedEnd){
+      scene.remove(scene.getObjectByName(carArr[i].getMesh.name));
+      carArr.splice(i,1);
     }
   }
 
-  car1.move(trafficLightArr);
-  car2.move(trafficLightArr);
-
-  // if(((car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) < 0.1 || (car1.getMesh.position.x - trafficLightArr[0].getMesh.position.x) > 0.12) || trafficLightArr[0].getMode == 2) {
-  //   car1.getMesh.translateX(-0.004);
-  // }
-
-  if (car1.getMesh.position.x < -1) {
-    car1.getMesh.position.x = 0.9;
-  }
-
-  // if(((car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) > -0.1 || (car2.getMesh.position.y - trafficLightArr[1].getMesh.position.y) < -0.12) || trafficLightArr[1].getMode == 2) {
-  //   car2.getMesh.translateX(0.004);
-  // }
-
-  if (car2.getMesh.position.y > 0.5) {
-    car2.getMesh.position.set(0.0, -0.5, 0.01);
+  carCreatorCounter += 0.01
+  if(carCreatorCounter > 1 && carArr.length < 6){
+    let car = new Car(names++)
+    carArr.push(car);
+    scene.add(car.getMesh);
+    carCreatorCounter = 0;
   }
 
   trafficLightArr[0].changeColor();
   trafficLightArr[1].changeColor();
 }
-
-// // Create a client instance
-// var client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", "clientId");
-
-// // set callback handlers
-// client.onConnectionLost = onConnectionLost;
-// client.onMessageArrived = onMessageArrived;
-
-// // connect the client
-// client.connect({ onSuccess: onConnect });
-
-
-// // called when the client connects
-// function onConnect() {
-//   // Once a connection has been made, make a subscription and send a message.
-//   var subscribeOptions = {
-//     qos: 0,  // QoS
-//     invocationContext: { foo: true },  // Passed to success / failure callback
-//   };
-
-//   console.log("onConnect");
-//   client.subscribe("8/motor_vehicle/1/light/1", subscribeOptions);
-//   sendMessage("1");
-//   connected = true;
-// }
-
-// // called when the client loses its connection
-// function onConnectionLost(responseObject) {
-//   if (responseObject.errorCode !== 0) {
-//     console.log("onConnectionLost:" + responseObject.errorMessage);
-//   }
-// }
-
-// function sendMessage(messageText) {
-//   var message = new Paho.MQTT.Message(messageText);
-//   message.destinationName = "8/motor_vehicle/1/sensor/1";
-//   client.send(message);
-// }
-
-// // called when a message arrives
-// function onMessageArrived(message) {
-//   console.log("onMessageArrived:" + message.payloadString);
-//   console.log("topic:" + message.topic);
-//   setMode(Number(message.payloadString));
-// }
