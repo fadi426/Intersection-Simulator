@@ -67,9 +67,9 @@ function setMode(mode) {
 
 function init() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-  camera.position.z = 0.5;
-  camera.position.y = -0.5;
-  camera.rotation.x = 0.6;
+  camera.position.z = 1;
+  //camera.position.y = 0;
+  camera.rotation.x = 0;
 
   scene = new THREE.Scene();
 
@@ -78,31 +78,23 @@ function init() {
   //MQTT
   mqtt = new Mqtt("3478945836457", groupID + "/#");
 
-  //Ground
-  grass = new Ground(2, 1, 0x006400);
-  scene.add(grass.getMesh);
+  // //Ground
+  // grass = new Ground(2, 1, 0x006400);
+  // scene.add(grass.getMesh);
 
   //Road
-  road = new Road(2, 0.2, 0.01,0x808080)
+  road = new Road(10, 10, 0.01,0x808080)
   scene.add(road.getMesh);
 
-  road2 = new Road(0.2, 1, 0.01,0x808080)
-  scene.add(road2.getMesh);
-
-  //Car
-  // car1 = new Car(names++);
-  // car2 = new Car(names++);
-  // carArr.push(car1);
-  // carArr.push(car2);
-  // scene.add(car1.getMesh);
-  // scene.add(car2.getMesh);
+  // road2 = new Road(0.2, 1, 0.01,0x808080)
+  // scene.add(road2.getMesh);
 
   //TrafficLight
-  trafficLight1 = new TrafficLight(0.1, 0, 0.1, 1);
+  trafficLight1 = new TrafficLight(0.14, 0, 0, 1, 0);
   trafficLightArr.push(trafficLight1);
   scene.add(trafficLightArr[0].getMesh);
 
-  trafficLight2 = new TrafficLight(-0.1, -0.1, 0.1, 2);
+  trafficLight2 = new TrafficLight(0, -0.14, 0, 2, 1.58);
   trafficLightArr.push(trafficLight2);
   scene.add(trafficLightArr[1].getMesh);
 
@@ -114,14 +106,6 @@ function init() {
   sensor2 = new Sensor(0, -0.2, 0, 2, 2);
   sensorArr.push(sensor2);
   scene.add(sensor2.getMesh);
-
-  //StopLine
-  stopLine1 = new StopLine(0.14, 0, 0);
-  scene.add(stopLine1.getMesh);
-
-  stopLine2 = new StopLine(0, -0.14, 0);
-  stopLine2.getMesh.rotateZ(1.58);
-  scene.add(stopLine2.getMesh);
 
   //Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
