@@ -91,6 +91,11 @@ export class Car {
             }
         }
 
+        let differncePoints = new THREE.Vector3().copy(this._nextPoint);
+        differncePoints.sub(this._currentPoint);
+        let rotation = Math.atan(differncePoints.y / differncePoints.x);
+        this._mesh.rotation.z = rotation;
+
         let distance = this._nextPoint.distanceTo(this._currentPoint);
         let speed = this._speed / distance;
         let nextPoint = new THREE.Vector3().copy(this._nextPoint)
