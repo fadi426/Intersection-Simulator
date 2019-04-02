@@ -64,7 +64,7 @@ export class Mqtt {
             if(message.destinationName.includes("light")){
                 console.log('Message arrived : ' + message.payloadString);
                 this._message = message.payloadString;
-                this._destination =  message.destinationName;
+                this._destination = message.destinationName;
                 console.log(message.destinationName + " " + message.payloadString);
             }
         };

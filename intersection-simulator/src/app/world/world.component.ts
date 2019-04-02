@@ -36,14 +36,14 @@ var carCreatorCounter = 0;
 
 var road;
 var car1;
-var trafficLight1;
-var sensor1;
+// var trafficLight1;
+// var sensor1;
 var stopLine1;
 
 var road2;
 var car2;
-var trafficLight2;
-var sensor2;
+// var trafficLight2;
+// var sensor2;
 var stopLine2;
 
 var trafficLightArr = [];
@@ -67,13 +67,14 @@ function setMode(mode) {
 
 function init() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-  camera.position.z = 1;
+  camera.position.z = 2;
   //camera.position.y = 0;
   camera.rotation.x = 0;
 
   scene = new THREE.Scene();
 
-  groupID = prompt("Please enter the groupID", "8");
+  groupID = "8";
+  //groupID = prompt("Please enter the groupID", "8");
 
   //MQTT
   mqtt = new Mqtt("3478945836457", groupID + "/#");
@@ -90,22 +91,102 @@ function init() {
   // scene.add(road2.getMesh);
 
   //TrafficLight
-  trafficLight1 = new TrafficLight(0.14, 0, 0, 1, 0);
+  let trafficLight1 = new TrafficLight(-0.35, 0.40, 0, 1, 1.58);
   trafficLightArr.push(trafficLight1);
-  scene.add(trafficLightArr[0].getMesh);
 
-  trafficLight2 = new TrafficLight(0, -0.14, 0, 2, 1.58);
+  let trafficLight2 = new TrafficLight(-0.21, 0.40, 0, 2, 1.58);
   trafficLightArr.push(trafficLight2);
-  scene.add(trafficLightArr[1].getMesh);
+
+  let trafficLight3 = new TrafficLight(-0.07, 0.40, 0, 3, 1.58);
+  trafficLightArr.push(trafficLight3);
+
+  let trafficLight4 = new TrafficLight(0.40, 0.35, 0, 4, 0);
+  trafficLightArr.push(trafficLight4);
+
+  let trafficLight5 = new TrafficLight(0.40, 0.21, 0, 5, 0);
+  trafficLightArr.push(trafficLight5);
+
+  let trafficLight6 = new TrafficLight(0.40, 0.07, 0, 6, 0);
+  trafficLightArr.push(trafficLight6);
+
+  let trafficLight7 = new TrafficLight(0.40, -0.07, 0, 7, 0);
+  trafficLightArr.push(trafficLight7);
+
+  let trafficLight8 = new TrafficLight(0.35, -0.54, 0, 8, 1.58);
+  trafficLightArr.push(trafficLight8);
+
+  let trafficLight9 = new TrafficLight(0.21, -0.54, 0, 9, 1.58);
+  trafficLightArr.push(trafficLight9);
+
+  let trafficLight10 = new TrafficLight(0.07, -0.54, 0, 10, 1.58);
+  trafficLightArr.push(trafficLight10);
+
+  let trafficLight11 = new TrafficLight(-0.40, -0.49, 0, 11, 0);
+  trafficLightArr.push(trafficLight11);
+
+  let trafficLight12 = new TrafficLight(-0.40, -0.35, 0, 12, 0);
+  trafficLightArr.push(trafficLight12);
+
+  let trafficLight13 = new TrafficLight(-0.40, -0.21, 0, 13, 0);
+  trafficLightArr.push(trafficLight13);
+
+  let trafficLight14 = new TrafficLight(-0.40, -0.07, 0, 14, 0);
+  trafficLightArr.push(trafficLight14);
+
+  trafficLightArr.forEach(trafficLight => {
+    scene.add(trafficLight.getMesh);
+  });
+
+  // trafficLight2 = new TrafficLight(0, -0.14, 0, 2, 1.58);
+  // trafficLightArr.push(trafficLight2);
+  // scene.add(trafficLightArr[1].getMesh);
 
   //Sensor
-  sensor1 = new Sensor(0.20, 0, 0, 1, 1);
+  let sensor1 = new Sensor(-0.35, 0.45, 0, 1, 1);
   sensorArr.push(sensor1);
-  scene.add(sensor1.getMesh);
 
-  sensor2 = new Sensor(0, -0.2, 0, 2, 2);
+  let sensor2 = new Sensor(-0.21, 0.45, 0, 1, 2);
   sensorArr.push(sensor2);
-  scene.add(sensor2.getMesh);
+
+  let sensor3 = new Sensor(-0.07, 0.45, 0, 1, 3);
+  sensorArr.push(sensor3);
+
+  let sensor4 = new Sensor(0.45, 0.35, 0, 1, 4);
+  sensorArr.push(sensor4);
+
+  let sensor5 = new Sensor(0.45, 0.21, 0, 1, 5);
+  sensorArr.push(sensor5);
+
+  let sensor6 = new Sensor(0.45, 0.07, 0, 2, 6);
+  sensorArr.push(sensor6);
+
+  let sensor7 = new Sensor(0.45, -0.07, 0, 1, 7);
+  sensorArr.push(sensor7);
+
+  let sensor8 = new Sensor(0.35, -0.59, 0, 1, 8);
+  sensorArr.push(sensor8);
+
+  let sensor9 = new Sensor(0.21, -0.59, 0, 2, 9);
+  sensorArr.push(sensor9);
+
+  let sensor10 = new Sensor(0.07, -0.59, 0, 1, 10);
+  sensorArr.push(sensor10);
+
+  let sensor11 = new Sensor(-0.45, -0.49, 0, 1, 11);
+  sensorArr.push(sensor11);
+
+  let sensor12 = new Sensor(-0.45, -0.35, 0, 1, 12);
+  sensorArr.push(sensor12);
+
+  let sensor13 = new Sensor(-0.45, -0.21, 0, 2, 13);
+  sensorArr.push(sensor13);
+
+  let sensor14 = new Sensor(-0.45, -0.07, 0, 1, 14);
+  sensorArr.push(sensor14);
+
+  sensorArr.forEach(sensor => {
+    scene.add(sensor.getMesh);
+  });
 
   //Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -132,11 +213,11 @@ function animate() {
         }
       });
       if(triggered && sensor.getSensorValue == 0){
-        mqtt.sendMessage("1", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/1");
+        mqtt.sendMessage("1", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/" + sensor.getId);
         sensor.setSensorValue = 1;
       }
       if(!triggered && sensor.getSensorValue == 1){
-        mqtt.sendMessage("0", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/1");
+        mqtt.sendMessage("0", groupID + "/motor_vehicle/" + sensor.getSensorGroup + "/sensor/" + sensor.getId);
         sensor.setSensorValue = 0;
       }
     });
@@ -151,13 +232,14 @@ function animate() {
   }
 
   carCreatorCounter += 0.01
-  if(carCreatorCounter > 1 && carArr.length < 6){
+  if(carCreatorCounter > 0.70 && carArr.length < 25){
     let car = new Car(names++)
     carArr.push(car);
     scene.add(car.getMesh);
     carCreatorCounter = 0;
   }
 
-  trafficLightArr[0].changeColor();
-  trafficLightArr[1].changeColor();
+  trafficLightArr.forEach(trafficLight => {
+    trafficLight.changeColor()
+  });
 }
