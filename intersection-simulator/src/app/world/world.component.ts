@@ -142,46 +142,46 @@ function init() {
   // scene.add(trafficLightArr[1].getMesh);
 
   //Sensor
-  let sensor1 = new Sensor(-0.35, 0.45, 0, 1, 1);
+  let sensor1 = new Sensor(-0.35, 0.48, 0, 1, 1);
   sensorArr.push(sensor1);
 
-  let sensor2 = new Sensor(-0.21, 0.45, 0, 1, 2);
+  let sensor2 = new Sensor(-0.21, 0.48, 0, 1, 2);
   sensorArr.push(sensor2);
 
-  let sensor3 = new Sensor(-0.07, 0.45, 0, 1, 3);
+  let sensor3 = new Sensor(-0.07, 0.48, 0, 1, 3);
   sensorArr.push(sensor3);
 
-  let sensor4 = new Sensor(0.45, 0.35, 0, 1, 4);
+  let sensor4 = new Sensor(0.48, 0.35, 0, 1, 4);
   sensorArr.push(sensor4);
 
-  let sensor5 = new Sensor(0.45, 0.21, 0, 1, 5);
+  let sensor5 = new Sensor(0.48, 0.21, 0, 1, 5);
   sensorArr.push(sensor5);
 
-  let sensor6 = new Sensor(0.45, 0.07, 0, 2, 6);
+  let sensor6 = new Sensor(0.48, 0.07, 0, 2, 6);
   sensorArr.push(sensor6);
 
-  let sensor7 = new Sensor(0.45, -0.07, 0, 1, 7);
+  let sensor7 = new Sensor(0.48, -0.07, 0, 1, 7);
   sensorArr.push(sensor7);
 
-  let sensor8 = new Sensor(0.35, -0.59, 0, 1, 8);
+  let sensor8 = new Sensor(0.35, -0.62, 0, 1, 8);
   sensorArr.push(sensor8);
 
-  let sensor9 = new Sensor(0.21, -0.59, 0, 2, 9);
+  let sensor9 = new Sensor(0.21, -0.62, 0, 2, 9);
   sensorArr.push(sensor9);
 
-  let sensor10 = new Sensor(0.07, -0.59, 0, 1, 10);
+  let sensor10 = new Sensor(0.07, -0.62, 0, 1, 10);
   sensorArr.push(sensor10);
 
-  let sensor11 = new Sensor(-0.45, -0.49, 0, 1, 11);
+  let sensor11 = new Sensor(-0.48, -0.49, 0, 1, 11);
   sensorArr.push(sensor11);
 
-  let sensor12 = new Sensor(-0.45, -0.35, 0, 1, 12);
+  let sensor12 = new Sensor(-0.48, -0.35, 0, 1, 12);
   sensorArr.push(sensor12);
 
-  let sensor13 = new Sensor(-0.45, -0.21, 0, 2, 13);
+  let sensor13 = new Sensor(-0.48, -0.21, 0, 2, 13);
   sensorArr.push(sensor13);
 
-  let sensor14 = new Sensor(-0.45, -0.07, 0, 1, 14);
+  let sensor14 = new Sensor(-0.48, -0.07, 0, 1, 14);
   sensorArr.push(sensor14);
 
   sensorArr.forEach(sensor => {
