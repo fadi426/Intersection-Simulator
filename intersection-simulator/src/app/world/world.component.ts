@@ -56,7 +56,8 @@ animate();
 
 function setMode(mode) {
   trafficLightArr.forEach(trafficLight => {
-    if(trafficLight.getId == mqtt.getDestination.charAt(16))
+    let message = mqtt.getDestination.split("/");
+    if(trafficLight.getId == message[2])
     {
       trafficLight.setMode = mode;
       mqtt.setMessage(null);
@@ -67,7 +68,7 @@ function setMode(mode) {
 
 function init() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-  camera.position.z = 2;
+  camera.position.z = 4;
   //camera.position.y = 0;
   camera.rotation.x = 0;
 
@@ -232,7 +233,7 @@ function animate() {
   }
 
   carCreatorCounter += 0.01
-  if(carCreatorCounter > 0.70 && carArr.length < 25){
+  if(carCreatorCounter > 0.60 && carArr.length < 500){
     let car = new Car(names++)
     carArr.push(car);
     scene.add(car.getMesh);

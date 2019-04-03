@@ -4,20 +4,24 @@ import { Vector3 } from 'three';
 
 export class Car {
     private _mesh : any;
-    private _car1Path = [new THREE.Vector3(-0.35, 2.0, 0.001), new THREE.Vector3(-0.35, 0.35, 0.001), new THREE.Vector3(-2, 0.35, 0.001)];
-    private _car2Path = [new THREE.Vector3(-0.21, 2.0, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
-    private _car3Path = [new THREE.Vector3(-0.07, 2.0, 0.001), new THREE.Vector3(-0.07, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
-    private _car4Path = [new THREE.Vector3(2.0, 0.35, 0.001), new THREE.Vector3(0.35, 0.35, 0.001), new THREE.Vector3(0.35, 2.0, 0.001)];
-    private _car5Path = [new THREE.Vector3(2.0, 0.21, 0.001), new THREE.Vector3(0.35, 0.21, 0.001), new THREE.Vector3(-0.49, 0.35, 0.001), new THREE.Vector3(-2.0, 0.35, 0.001)];
-    private _car6Path = [new THREE.Vector3(2.0, 0.07, 0.001), new THREE.Vector3(0.35, 0.07, 0.001), new THREE.Vector3(-0.49, 0.21, 0.001), new THREE.Vector3(-2.0, 0.21, 0.001)];
-    private _car7Path = [new THREE.Vector3(2.0, -0.07, 0.001), new THREE.Vector3(-0.21, -0.07, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
-    private _car8Path = [new THREE.Vector3(0.35, -2.0, 0.001), new THREE.Vector3(0.35, -0.49, 0.001), new THREE.Vector3(2.0, -0.49, 0.001)];
-    private _car9Path = [new THREE.Vector3(0.21, -2.0, 0.001), new THREE.Vector3(0.21, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
-    private _car10Path = [new THREE.Vector3(0.07, -2.0, 0.001), new THREE.Vector3(0.07, -0.49, 0.001), new THREE.Vector3(0.35, 0.35, 0.001), new THREE.Vector3(0.35, 2.0, 0.001)];
-    private _paths = [this._car1Path,this._car2Path,this._car3Path,this._car4Path,this._car5Path,this._car6Path,this._car7Path,this._car8Path,this._car9Path,this._car10Path];
+    private _car1Path = [new THREE.Vector3(-0.35, 5.0, 0.001), new THREE.Vector3(-0.35, 0.35, 0.001), new THREE.Vector3(-2, 0.35, 0.001)];
+    private _car2Path = [new THREE.Vector3(-0.21, 5.0, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
+    private _car3Path = [new THREE.Vector3(-0.07, 5.0, 0.001), new THREE.Vector3(-0.07, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
+    private _car4Path = [new THREE.Vector3(5.0, 0.35, 0.001), new THREE.Vector3(0.35, 0.35, 0.001), new THREE.Vector3(0.35, 2.0, 0.001)];
+    private _car5Path = [new THREE.Vector3(5.0, 0.21, 0.001), new THREE.Vector3(0.35, 0.21, 0.001), new THREE.Vector3(-0.49, 0.35, 0.001), new THREE.Vector3(-2.0, 0.35, 0.001)];
+    private _car6Path = [new THREE.Vector3(5.0, 0.07, 0.001), new THREE.Vector3(0.35, 0.07, 0.001), new THREE.Vector3(-0.49, 0.21, 0.001), new THREE.Vector3(-2.0, 0.21, 0.001)];
+    private _car7Path = [new THREE.Vector3(5.0, -0.07, 0.001), new THREE.Vector3(-0.21, -0.07, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
+    private _car8Path = [new THREE.Vector3(0.35, -5.0, 0.001), new THREE.Vector3(0.35, -0.49, 0.001), new THREE.Vector3(2.0, -0.49, 0.001)];
+    private _car9Path = [new THREE.Vector3(0.21, -5.0, 0.001), new THREE.Vector3(0.21, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
+    private _car10Path = [new THREE.Vector3(0.07, -5.0, 0.001), new THREE.Vector3(0.07, -0.49, 0.001), new THREE.Vector3(0.35, 0.35, 0.001), new THREE.Vector3(0.35, 2.0, 0.001)];
+    private _car11Path = [new THREE.Vector3(-5.0, -0.49, 0.001), new THREE.Vector3(-0.21, -0.49, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
+    private _car12Path = [new THREE.Vector3(-5.0, -0.35, 0.001), new THREE.Vector3(-0.35, -0.35, 0.001), new THREE.Vector3(0.35, -0.49, 0.001), new THREE.Vector3(2.0, -0.49, 0.001)];
+    private _car13Path = [new THREE.Vector3(-5.0, -0.21, 0.001), new THREE.Vector3(-0.35, -0.21, 0.001), new THREE.Vector3(0.35, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
+    private _car14Path = [new THREE.Vector3(-5.0, -0.07, 0.001), new THREE.Vector3(0.35, -0.07, 0.001), new THREE.Vector3(0.35, 2.0, 0.001)];
+    private _paths = [this._car1Path,this._car2Path,this._car3Path,this._car4Path,this._car5Path,this._car6Path,this._car7Path,this._car8Path,this._car9Path,this._car10Path,this._car11Path,this._car12Path,this._car13Path,this._car14Path];
     private _path : Vector3[];
     private _speed = 0;
-    private _maxSpeed = 0.004;
+    private _maxSpeed = 0.008;
     private _respawnDistance = 0.02;
     private _currentPoint : Vector3;
     private _nextPoint : Vector3;
@@ -79,7 +83,7 @@ export class Car {
                 this._speed = this._maxSpeed;
             }
             else{
-                this._speed += 0.00004;
+                this._speed += 0.00012;
             }
         }
         else{
@@ -87,7 +91,7 @@ export class Car {
                 this._speed = 0;
             }
             else{
-                this._speed -= 0.0003;
+                this._speed -= 0.0010;
             }
         }
 
