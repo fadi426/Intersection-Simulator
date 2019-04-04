@@ -57,7 +57,7 @@ animate();
 function setMode(mode) {
   trafficLightArr.forEach(trafficLight => {
     let message = mqtt.getDestination.split("/");
-    if(trafficLight.getId == message[2])
+    if(trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
     {
       trafficLight.setMode = mode;
       mqtt.setMessage(null);
@@ -92,46 +92,46 @@ function init() {
   // scene.add(road2.getMesh);
 
   //TrafficLight
-  let trafficLight1 = new TrafficLight(-0.35, 0.40, 0, 1, 1.58);
+  let trafficLight1 = new TrafficLight(-0.35, 0.40, 0, 1, 1, 1.58);
   trafficLightArr.push(trafficLight1);
 
-  let trafficLight2 = new TrafficLight(-0.21, 0.40, 0, 2, 1.58);
+  let trafficLight2 = new TrafficLight(-0.21, 0.40, 0, 1, 2, 1.58);
   trafficLightArr.push(trafficLight2);
 
-  let trafficLight3 = new TrafficLight(-0.07, 0.40, 0, 3, 1.58);
+  let trafficLight3 = new TrafficLight(-0.07, 0.40, 0, 1, 3, 1.58);
   trafficLightArr.push(trafficLight3);
 
-  let trafficLight4 = new TrafficLight(0.40, 0.35, 0, 4, 0);
+  let trafficLight4 = new TrafficLight(0.40, 0.35, 0, 1, 4, 0);
   trafficLightArr.push(trafficLight4);
 
-  let trafficLight5 = new TrafficLight(0.40, 0.21, 0, 5, 0);
+  let trafficLight5 = new TrafficLight(0.40, 0.21, 0, 1, 5, 0);
   trafficLightArr.push(trafficLight5);
 
-  let trafficLight6 = new TrafficLight(0.40, 0.07, 0, 6, 0);
+  let trafficLight6 = new TrafficLight(0.40, 0.07, 0, 2, 5, 0);
   trafficLightArr.push(trafficLight6);
 
-  let trafficLight7 = new TrafficLight(0.40, -0.07, 0, 7, 0);
+  let trafficLight7 = new TrafficLight(0.40, -0.07, 0, 1, 6, 0);
   trafficLightArr.push(trafficLight7);
 
-  let trafficLight8 = new TrafficLight(0.35, -0.54, 0, 8, 1.58);
+  let trafficLight8 = new TrafficLight(0.35, -0.54, 0, 1, 7, 1.58);
   trafficLightArr.push(trafficLight8);
 
-  let trafficLight9 = new TrafficLight(0.21, -0.54, 0, 9, 1.58);
+  let trafficLight9 = new TrafficLight(0.21, -0.54, 0, 2, 7, 1.58);
   trafficLightArr.push(trafficLight9);
 
-  let trafficLight10 = new TrafficLight(0.07, -0.54, 0, 10, 1.58);
+  let trafficLight10 = new TrafficLight(0.07, -0.54, 0, 1, 8, 1.58);
   trafficLightArr.push(trafficLight10);
 
-  let trafficLight11 = new TrafficLight(-0.40, -0.49, 0, 11, 0);
+  let trafficLight11 = new TrafficLight(-0.40, -0.49, 0, 1, 9, 0);
   trafficLightArr.push(trafficLight11);
 
-  let trafficLight12 = new TrafficLight(-0.40, -0.35, 0, 12, 0);
+  let trafficLight12 = new TrafficLight(-0.40, -0.35, 0, 1, 10, 0);
   trafficLightArr.push(trafficLight12);
 
-  let trafficLight13 = new TrafficLight(-0.40, -0.21, 0, 13, 0);
+  let trafficLight13 = new TrafficLight(-0.40, -0.21, 0, 2, 10, 0);
   trafficLightArr.push(trafficLight13);
 
-  let trafficLight14 = new TrafficLight(-0.40, -0.07, 0, 14, 0);
+  let trafficLight14 = new TrafficLight(-0.40, -0.07, 0, 1, 11, 0);
   trafficLightArr.push(trafficLight14);
 
   trafficLightArr.forEach(trafficLight => {
@@ -158,31 +158,31 @@ function init() {
   let sensor5 = new Sensor(0.48, 0.21, 0, 1, 5);
   sensorArr.push(sensor5);
 
-  let sensor6 = new Sensor(0.48, 0.07, 0, 2, 6);
+  let sensor6 = new Sensor(0.48, 0.07, 0, 2, 5);
   sensorArr.push(sensor6);
 
-  let sensor7 = new Sensor(0.48, -0.07, 0, 1, 7);
+  let sensor7 = new Sensor(0.48, -0.07, 0, 1, 6);
   sensorArr.push(sensor7);
 
-  let sensor8 = new Sensor(0.35, -0.62, 0, 1, 8);
+  let sensor8 = new Sensor(0.35, -0.62, 0, 1, 7);
   sensorArr.push(sensor8);
 
-  let sensor9 = new Sensor(0.21, -0.62, 0, 2, 9);
+  let sensor9 = new Sensor(0.21, -0.62, 0, 2, 7);
   sensorArr.push(sensor9);
 
-  let sensor10 = new Sensor(0.07, -0.62, 0, 1, 10);
+  let sensor10 = new Sensor(0.07, -0.62, 0, 1, 8);
   sensorArr.push(sensor10);
 
-  let sensor11 = new Sensor(-0.48, -0.49, 0, 1, 11);
+  let sensor11 = new Sensor(-0.48, -0.49, 0, 1, 9);
   sensorArr.push(sensor11);
 
-  let sensor12 = new Sensor(-0.48, -0.35, 0, 1, 12);
+  let sensor12 = new Sensor(-0.48, -0.35, 0, 1, 10);
   sensorArr.push(sensor12);
 
-  let sensor13 = new Sensor(-0.48, -0.21, 0, 2, 13);
+  let sensor13 = new Sensor(-0.48, -0.21, 0, 2, 10);
   sensorArr.push(sensor13);
 
-  let sensor14 = new Sensor(-0.48, -0.07, 0, 1, 14);
+  let sensor14 = new Sensor(-0.48, -0.07, 0, 1, 11);
   sensorArr.push(sensor14);
 
   sensorArr.forEach(sensor => {

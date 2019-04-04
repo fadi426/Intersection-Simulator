@@ -3,7 +3,7 @@ export class TrafficLight {
     private _mesh : any;
     private _mode : number;
 
-    constructor(private _x : number, private _y : number, private _z : number, private _id : number, private _rotation : number){
+    constructor(private _x : number, private _y : number, private _z : number, private _id : number, private groupId : number, private _rotation : number){
         let geometry = new THREE.BoxGeometry(0.015, 0.1, 0.02);
         let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
@@ -22,6 +22,10 @@ export class TrafficLight {
 
     public get getId(){
         return this._id;
+    }
+
+    public get getGroupId(){
+        return this.groupId;
     }
 
     public set setMode(value){
