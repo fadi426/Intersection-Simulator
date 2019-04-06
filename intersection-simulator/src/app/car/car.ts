@@ -107,45 +107,6 @@ export class Car {
         this._currentPosition.x += direction.x * speed;
         this._currentPosition.y += direction.y * speed;
         this._mesh.position.set(this._currentPosition.x, this._currentPosition.y, this._currentPosition.z);
-
-        
-
-        // if(Math.abs(this._mesh.position.x - this._path[this._path.length - 1].x) < this._respawnDistance && Math.abs(this._mesh.position.y - this._path[this._path.length - 1].y) < this._respawnDistance){
-        //     this._reachedEnd = true;
-        // }
-
-        // if(this._currentPoint[0] > this._nextPoint[0] && this._currentPoint[1] == this._nextPoint[1]){
-        //     let move = true;
-        //     if(!(((this._mesh.position.x - trafficLightArr[this._pathNumber].getMesh.position.x) < 0.1 || (this._mesh.position.x - trafficLightArr[this._pathNumber].getMesh.position.x) > 0.12) || trafficLightArr[this._pathNumber].getMode == 2)){
-        //         move = false;
-        //     }
-        //     carArr.forEach(car => {
-        //         if(move && (this._mesh.position.x - car.getMesh.position.x) < 0.12 && (this._mesh.position.x - car.getMesh.position.x) > 0.07 && this._mesh.position.y == car.getMesh.position.y){
-        //             move = false;
-        //         }
-        //     });
-        //     if(move){
-        //         this._mesh.translateX(-this._speed);
-        //     }
-        // }
-        // else if(this._currentPoint[1] < this._nextPoint[1] && this._currentPoint[0] == this._nextPoint[0]){
-        //     let move = true;
-        //     if(!(((this._mesh.position.y - trafficLightArr[this._pathNumber].getMesh.position.y) > -0.1 || (this._mesh.position.y - trafficLightArr[this._pathNumber].getMesh.position.y) < -0.12) || trafficLightArr[this._pathNumber].getMode == 2)){
-        //         move = false;
-        //     }
-        //     carArr.forEach(car => {
-        //         if(move && (this._mesh.position.y - car.getMesh.position.y) > -0.12 && (this._mesh.position.y - car.getMesh.position.y) < -0.07 && Math.abs(this._mesh.position.x - car.getMesh.position.x) < 0.01){
-        //             move = false;
-        //         }
-        //     });
-        //     if(move){
-        //         this._mesh.translateX(this._speed);
-        //     }
-        // }
-
-        // if(Math.abs(this._mesh.position.x - this._path[this._path.length - 1][0]) < 0.02 && Math.abs(this._mesh.position.y - this._path[this._path.length - 1][1]) < 0.02){
-        //     this._reachedEnd = true;
-        // }
     }
 
     public get getMesh(){

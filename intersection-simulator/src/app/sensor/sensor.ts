@@ -4,7 +4,7 @@ export class Sensor {
     private _sensorValue = 0;
     private _sensorGroup : number;
 
-    constructor(private _x : number, private _y : number, private _z : number, private _id : number, private _group : number){
+    constructor(private _x : number, private _y : number, private _z : number, private _id : number, private _group : number, private _type : String){
         let geometry = new THREE.BoxGeometry(0.02, 0.02, 0.02);
         let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
@@ -26,6 +26,10 @@ export class Sensor {
 
     public get getSensorGroup(){
         return this._sensorGroup;
+    }
+
+    public get getType(){
+        return this._type;
     }
 
     public set setSensorValue(value){
