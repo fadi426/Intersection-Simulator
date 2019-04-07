@@ -50,8 +50,9 @@ animate();
 function setMode(mode) {
   trafficLightArr.forEach(trafficLight => {
     let message = mqtt.getDestination.split("/");
-    if(trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
+    if(trafficLight.getGroup == message[1] && trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
     {
+      console.log(trafficLight.getGroup);
       trafficLight.setMode = mode;
       mqtt.setMessage(null);
       mqtt.setDestination(null);
@@ -85,26 +86,26 @@ function init() {
   // scene.add(road2.getMesh);
 
   //TrafficLights Car
-  trafficLightArr.push(new TrafficLight(-0.35, 0.70, 0, 1, 1, 1.58));
-  trafficLightArr.push(new TrafficLight(-0.21, 0.70, 0, 1, 2, 1.58));
-  trafficLightArr.push(new TrafficLight(-0.07, 0.70, 0, 1, 3, 1.58));
+  trafficLightArr.push(new TrafficLight(-0.35, 0.70, 0, 1, 1, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.21, 0.70, 0, 1, 2, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.07, 0.70, 0, 1, 3, "motor_vehicle", 1.58));
 
-  trafficLightArr.push(new TrafficLight(0.70, 0.35, 0, 1, 4, 0));
-  trafficLightArr.push(new TrafficLight(0.70, 0.21, 0, 1, 5, 0));
-  trafficLightArr.push(new TrafficLight(0.70, 0.07, 0, 2, 5, 0));
-  trafficLightArr.push(new TrafficLight(0.70, -0.07, 0, 1, 6, 0));
+  trafficLightArr.push(new TrafficLight(0.70, 0.35, 0, 1, 4, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(0.70, 0.21, 0, 1, 5, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(0.70, 0.07, 0, 2, 5, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(0.70, -0.07, 0, 1, 6, "motor_vehicle", 0));
 
-  trafficLightArr.push(new TrafficLight(0.35, -0.84, 0, 1, 7, 1.58));
-  trafficLightArr.push(new TrafficLight(0.21, -0.84, 0, 2, 7, 1.58));
-  trafficLightArr.push(new TrafficLight(0.07, -0.84, 0, 1, 8, 1.58));
+  trafficLightArr.push(new TrafficLight(0.35, -0.84, 0, 1, 7, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(0.21, -0.84, 0, 2, 7, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(0.07, -0.84, 0, 1, 8, "motor_vehicle", 1.58));
 
-  trafficLightArr.push(new TrafficLight(-0.70, -0.49, 0, 1, 9, 0));
-  trafficLightArr.push(new TrafficLight(-0.70, -0.35, 0, 1, 10, 0));
-  trafficLightArr.push(new TrafficLight(-0.70, -0.21, 0, 2, 10, 0));
-  trafficLightArr.push(new TrafficLight(-0.70, -0.07, 0, 1, 11, 0));
+  trafficLightArr.push(new TrafficLight(-0.70, -0.49, 0, 1, 9, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(-0.70, -0.35, 0, 1, 10, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(-0.70, -0.21, 0, 2, 10, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(-0.70, -0.07, 0, 1, 11, "motor_vehicle", 0));
 
   //TrafficLights Cycle
-  trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 4, 0));
+  trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 1, "cycle", 0));
 
   trafficLightArr.forEach(trafficLight => {
     scene.add(trafficLight.getMesh);
