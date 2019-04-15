@@ -4,7 +4,7 @@ export class Mqtt {
     private _client: Paho.MQTT.Client;
     private _connected: boolean;
     private _subscribeOptions: any;
-    private _message = null;
+    private _message = [];
     private _destination = null;
 
     constructor(private _clientId: string, private _groupId: string) {
@@ -34,9 +34,9 @@ export class Mqtt {
         this._destination = value;
     }
 
-    public setMessage(value : string) {
-        this._message = value;
-    }
+    // public setMessage(value : string) {
+    //     this._message = value;
+    // }
 
     public connect() {
         this._client.connect({ onSuccess: this.onConnect.bind(this) });
@@ -59,11 +59,15 @@ export class Mqtt {
         this._client.send(message);
     }
 
+    public emptyMessage() {
+        this._message = [];
+    }
+
     public onMessageArrived() {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
             if(message.destinationName.includes("light")){
                 console.log('Message arrived : ' + message.payloadString);
-                this._message = message.payloadString;
+                this._message.push(message.payloadString);
                 this._destination = message.destinationName;
                 console.log(message.destinationName + " " + message.payloadString);
             }

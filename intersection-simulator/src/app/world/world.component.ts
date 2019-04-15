@@ -54,7 +54,7 @@ function setMode(mode) {
     {
       console.log(trafficLight.getGroup);
       trafficLight.setMode = mode;
-      mqtt.setMessage(null);
+      //mqtt.setMessage(null);
       mqtt.setDestination(null);
     }
   });
@@ -68,8 +68,8 @@ function init() {
 
   scene = new THREE.Scene();
 
-  groupID = "8";
-  //groupID = prompt("Please enter the groupID", "8");
+  //groupID = "8";
+  groupID = prompt("Please enter the groupID", "8");
 
   //MQTT
   mqtt = new Mqtt("3478945836457", groupID + "/#");
@@ -145,8 +145,11 @@ function init() {
 
 function animate() {
 
-  if(mqtt.getMessage != null){
-    setMode(mqtt.getMessage);
+  if(mqtt.getMessage != []){
+    mqtt.getMessage.forEach(message => {
+      setMode(message);
+    });
+    mqtt.emptyMessage();
   }
 
   requestAnimationFrame(animate);
