@@ -33,7 +33,7 @@ export class Foot {
         this._currentPoint = this._path[0];
         this._nextPoint = this._path[1];
         let geometry = new THREE.BoxGeometry(0.015, 0.015, 0.05);
-        let material = new THREE.MeshBasicMaterial({ color: '#'+(Math.random()*0xFFFFFF<<0).toString(16) });
+        let material = new THREE.MeshBasicMaterial({ color: 0xc7ea46 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.name = Name;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);

@@ -69,8 +69,8 @@ function init() {
 
   scene = new THREE.Scene();
 
-  groupID = "8";
-  //groupID = prompt("Please enter the groupID", "8");
+  //groupID = "8";
+  groupID = prompt("Please enter the groupID", "8");
 
   //MQTT
   mqtt = new Mqtt("3478945836457", groupID + "/#");
