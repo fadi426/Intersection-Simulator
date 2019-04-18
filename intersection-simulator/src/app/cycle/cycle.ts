@@ -9,6 +9,8 @@ export class Cycle {
     private _cycle3Path = [new THREE.Vector3(-5.0, -0.63, 0.001), new THREE.Vector3(2.0, -0.63, 0.001)];
     private _cycle4Path = [new THREE.Vector3(-0.49, 5.0, 0.001), new THREE.Vector3(-0.49, -2.0, 0.001)];
     private _paths = [this._cycle1Path, this._cycle2Path, this._cycle3Path, this._cycle4Path];
+    private _pathLights = [[[1,1]],[[2,1]],[[3,1]],[[4,1]]];
+    private _pathLight : any;
     private _path : Vector3[];
     private _speed = 0;
     private _maxSpeed = 0.003;
@@ -23,6 +25,7 @@ export class Cycle {
     constructor(Name : Number){
         this._pathNumber = Math.floor(Math.random() * this._paths.length);
         this._path = this._paths[this._pathNumber]
+        this._pathLight = this._pathLights[this._pathNumber];
         this._currentPoint = this._path[0];
         this._nextPoint = this._path[1];
         let geometry = new THREE.BoxGeometry(0.07, 0.015, 0.05);
@@ -56,9 +59,18 @@ export class Cycle {
         cycleFront.y += directionCycle.y * frontDistance;
 
         let move = true;
-        let distanceToLight = cycleFront.distanceTo(trafficLightArr[this._pathNumber + 14].getMesh.position);
-        if(!(distanceToLight > 0.02 || trafficLightArr[this._pathNumber + 14].getMode == 2)){
-            move = false;
+        
+        for(let i = 0; i < this._pathLight.length; i++){
+            let trafficLight;
+            trafficLightArr.forEach(light => {
+                if(light.getGroupId == this._pathLight[i][0] && light.getId == this._pathLight[i][1] && light.getGroup == "cycle"){
+                    trafficLight = light;
+                }
+            });
+            let distanceToLight = cycleFront.distanceTo(trafficLight.getMesh.position);
+            if(!(distanceToLight > 0.02 || trafficLight.getMode == 2)){
+                move = false;
+            }
         }
         
         cycleArr.forEach(cycle => {

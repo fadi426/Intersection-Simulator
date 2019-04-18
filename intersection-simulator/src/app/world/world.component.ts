@@ -69,8 +69,8 @@ function init() {
 
   scene = new THREE.Scene();
 
-  //groupID = "8";
-  groupID = prompt("Please enter the groupID", "8");
+  groupID = "8";
+  //groupID = prompt("Please enter the groupID", "8");
 
   //MQTT
   mqtt = new Mqtt("3478945836457", groupID + "/#");
@@ -147,10 +147,10 @@ function init() {
   sensorArr.push(new Sensor(-0.49, 0.50, 0, 1, 4, "cycle"));
 
   //Sensors Foot
-  sensorArr.push(new Sensor(-0.46, 0.60, 0, 1, 1, "foot"));
-  sensorArr.push(new Sensor(0.10, 0.60, 0, 2, 1, "foot"));
-  sensorArr.push(new Sensor(0.04, 0.66, 0, 1, 2, "foot"));
-  sensorArr.push(new Sensor(0.44, 0.66, 0, 2, 2, "foot"));
+  sensorArr.push(new Sensor(-0.48, 0.60, 0, 1, 1, "foot"));
+  sensorArr.push(new Sensor(0.08, 0.60, 0, 2, 1, "foot"));
+  sensorArr.push(new Sensor(0.06, 0.66, 0, 1, 2, "foot"));
+  sensorArr.push(new Sensor(0.46, 0.66, 0, 2, 2, "foot"));
 
   sensorArr.forEach(sensor => {
     scene.add(sensor.getMesh);
@@ -237,7 +237,7 @@ function animate() {
   }
 
   cycleCreatorCounter += 0.01
-  if(cycleCreatorCounter > 5 && cycleArr.length < 500){
+  if(cycleCreatorCounter > 10 && cycleArr.length < 500){
     let cycle = new Cycle(names++);
     cycleArr.push(cycle);
     scene.add(cycle.getMesh);
@@ -245,7 +245,7 @@ function animate() {
   }
 
   footCreatorCounter += 0.01
-  if(footCreatorCounter > 0.5 && footArr.length < 500){
+  if(footCreatorCounter > 10 && footArr.length < 500){
     let foot = new Foot(names++);
     footArr.push(foot);
     scene.add(foot.getMesh);

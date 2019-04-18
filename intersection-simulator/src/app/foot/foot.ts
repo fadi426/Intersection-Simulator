@@ -9,9 +9,11 @@ export class Foot {
     // private _foot3Path = [new THREE.Vector3(-5.0, -0.63, 0.001), new THREE.Vector3(2.0, -0.63, 0.001)];
     // private _foot4Path = [new THREE.Vector3(-0.49, 5.0, 0.001), new THREE.Vector3(-0.49, -2.0, 0.001)];
     private _paths = [this._foot1Path, this._foot2Path];
+    private _pathLights = [[[1,1],[1,2]],[[2,1],[2,2]]];
+    private _pathLight : any;
     private _path : Vector3[];
     private _speed = 0;
-    private _maxSpeed = 0.008;
+    private _maxSpeed = 0.002;
     private _respawnDistance = 0.02;
     private _currentPoint : Vector3;
     private _nextPoint : Vector3;
@@ -23,6 +25,7 @@ export class Foot {
     constructor(Name : Number){
         this._pathNumber = Math.floor(Math.random() * this._paths.length);
         this._path = this._paths[this._pathNumber]
+        this._pathLight = this._pathLights[this._pathNumber];
         this._currentPoint = this._path[0];
         this._nextPoint = this._path[1];
         let geometry = new THREE.BoxGeometry(0.015, 0.015, 0.05);
@@ -56,9 +59,18 @@ export class Foot {
         footFront.y += directionFoot.y * frontDistance;
 
         let move = true;
-        let distanceToLight = footFront.distanceTo(trafficLightArr[this._pathNumber + 18].getMesh.position);
-        if(!(distanceToLight > 0.02 || trafficLightArr[this._pathNumber + 18].getMode == 2)){
-            move = false;
+        
+        for(let i = 0; i < this._pathLight.length; i++){
+            let trafficLight;
+            trafficLightArr.forEach(light => {
+                if(light.getGroupId == this._pathLight[i][0] && light.getId == this._pathLight[i][1] && light.getGroup == "foot"){
+                    trafficLight = light;
+                }
+            });
+            let distanceToLight = footFront.distanceTo(trafficLight.getMesh.position);
+            if(!(distanceToLight > 0.0303 || trafficLight.getMode == 2)){
+                move = false;
+            }
         }
         
         footArr.forEach(foot => {
@@ -73,7 +85,7 @@ export class Foot {
                 this._speed = this._maxSpeed;
             }
             else{
-                this._speed += 0.00004;
+                this._speed += 0.002;
             }
         }
         else{
@@ -81,7 +93,7 @@ export class Foot {
                 this._speed = 0;
             }
             else{
-                this._speed -= 0.0010;
+                this._speed -= 0.002;
             }
         }
 
