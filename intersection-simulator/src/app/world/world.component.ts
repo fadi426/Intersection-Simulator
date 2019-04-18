@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Paho } from 'ng2-mqtt/mqttws31';
 import { Car } from '../car/car';
 import { Cycle } from '../cycle/cycle';
+import { Foot } from '../foot/foot';
 import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
 import { TrafficLight } from '../trafficLight/traffic-light'
@@ -33,9 +34,11 @@ var sensorCurrent = 0;
 var grass;
 var carArr = [];
 var cycleArr = [];
+var footArr = [];
 var names = 1;
 var carCreatorCounter = 0;
 var cycleCreatorCounter = 0;
+var footCreatorCounter = 0;
 
 var road;
 
@@ -52,9 +55,7 @@ function setMode(mode) {
     let message = mqtt.getDestination.split("/");
     if(trafficLight.getGroup == message[1] && trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
     {
-      console.log(trafficLight.getGroup);
       trafficLight.setMode = mode;
-      //mqtt.setMessage(null);
       mqtt.setDestination(null);
     }
   });
@@ -106,6 +107,15 @@ function init() {
 
   //TrafficLights Cycle
   trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 1, "cycle", 0));
+  trafficLightArr.push(new TrafficLight(0.49, -0.56, 0, 1, 2, "cycle", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.42, -0.63, 0, 1, 3, "cycle", 0));
+  trafficLightArr.push(new TrafficLight(-0.49, 0.42, 0, 1, 4, "cycle", 1.58));
+
+  //TrafficLights Foot
+  trafficLightArr.push(new TrafficLight(-0.42, 0.63, 0, 1, 1, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.14, 0.63, 0, 2, 1, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.0 , 0.63, 0, 1, 2, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.40, 0.63, 0, 2, 2, "foot", 0));
 
   trafficLightArr.forEach(trafficLight => {
     scene.add(trafficLight.getMesh);
@@ -132,6 +142,15 @@ function init() {
 
   //Sensors Cycle
   sensorArr.push(new Sensor(0.48, 0.49, 0, 1, 1, "cycle"));
+  sensorArr.push(new Sensor(0.49, -0.64, 0, 1, 2, "cycle"));
+  sensorArr.push(new Sensor(-0.50, -0.63, 0, 1, 3, "cycle"));
+  sensorArr.push(new Sensor(-0.49, 0.50, 0, 1, 4, "cycle"));
+
+  //Sensors Foot
+  sensorArr.push(new Sensor(-0.46, 0.60, 0, 1, 1, "foot"));
+  sensorArr.push(new Sensor(0.10, 0.60, 0, 2, 1, "foot"));
+  sensorArr.push(new Sensor(0.04, 0.66, 0, 1, 2, "foot"));
+  sensorArr.push(new Sensor(0.44, 0.66, 0, 2, 2, "foot"));
 
   sensorArr.forEach(sensor => {
     scene.add(sensor.getMesh);
@@ -169,6 +188,11 @@ function animate() {
           triggered = true;
         }
       });
+      footArr.forEach(foot => {
+        if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
+          triggered = true;
+        }
+      });
       if(triggered && sensor.getSensorValue == 0){
         mqtt.sendMessage("1", groupID + "/" + sensor.getType + "/" + sensor.getSensorGroup + "/sensor/" + sensor.getId);
         sensor.setSensorValue = 1;
@@ -196,6 +220,14 @@ function animate() {
     }
   }
 
+  for(let i = footArr.length - 1; i > -1; i--){
+    footArr[i].move(trafficLightArr, footArr);
+    if(footArr[i].getReachedEnd){
+      scene.remove(scene.getObjectByName(footArr[i].getMesh.name));
+      footArr.splice(i,1);
+    }
+  }
+
   carCreatorCounter += 0.01
   if(carCreatorCounter > 0.60 && carArr.length < 500){
     let car = new Car(names++);
@@ -205,11 +237,19 @@ function animate() {
   }
 
   cycleCreatorCounter += 0.01
-  if(cycleCreatorCounter > 6 && cycleArr.length < 500){
+  if(cycleCreatorCounter > 5 && cycleArr.length < 500){
     let cycle = new Cycle(names++);
     cycleArr.push(cycle);
     scene.add(cycle.getMesh);
     cycleCreatorCounter = 0;
+  }
+
+  footCreatorCounter += 0.01
+  if(footCreatorCounter > 0.5 && footArr.length < 500){
+    let foot = new Foot(names++);
+    footArr.push(foot);
+    scene.add(foot.getMesh);
+    footCreatorCounter = 0;
   }
 
   trafficLightArr.forEach(trafficLight => {

@@ -1,6 +1,6 @@
 import { Cycle } from './cycle';
 
-describe('Car', () => {
+describe('Cycle', () => {
   it('should create an instance', () => {
     expect(new Cycle()).toBeTruthy();
   });
