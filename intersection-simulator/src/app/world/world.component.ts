@@ -114,8 +114,23 @@ function init() {
   //TrafficLights Foot
   trafficLightArr.push(new TrafficLight(-0.42, 0.63, 0, 1, 1, "foot", 0));
   trafficLightArr.push(new TrafficLight(0.14, 0.63, 0, 2, 1, "foot", 0));
-  trafficLightArr.push(new TrafficLight(0.0 , 0.63, 0, 1, 2, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.0, 0.63, 0, 1, 2, "foot", 0));
   trafficLightArr.push(new TrafficLight(0.40, 0.63, 0, 2, 2, "foot", 0));
+
+  trafficLightArr.push(new TrafficLight(0.63, 0.42, 0, 1, 3, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(0.63, -0.28, 0, 2, 3, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(0.63, -0.14, 0, 1, 4, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(0.63, -0.56, 0, 2, 4, "foot", 1.58));
+
+  trafficLightArr.push(new TrafficLight(0.40, -0.77, 0, 1, 5, "foot", 0));
+  trafficLightArr.push(new TrafficLight(-0.14, -0.77, 0, 2, 5, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.0, -0.77, 0, 1, 6, "foot", 0));
+  trafficLightArr.push(new TrafficLight(-0.42, -0.77, 0, 2, 6, "foot", 0));
+
+  trafficLightArr.push(new TrafficLight(-0.63, -0.56, 0, 1, 7, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.63, 0.14, 0, 2, 7, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.63, 0.0, 0, 1, 8, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.63, 0.42, 0, 2, 8, "foot", 1.58));
 
   trafficLightArr.forEach(trafficLight => {
     scene.add(trafficLight.getMesh);
@@ -151,6 +166,21 @@ function init() {
   sensorArr.push(new Sensor(0.08, 0.60, 0, 2, 1, "foot"));
   sensorArr.push(new Sensor(0.06, 0.66, 0, 1, 2, "foot"));
   sensorArr.push(new Sensor(0.46, 0.66, 0, 2, 2, "foot"));
+
+  sensorArr.push(new Sensor(0.60, 0.48, 0, 1, 3, "foot"));
+  sensorArr.push(new Sensor(0.60, -0.22, 0, 2, 3, "foot"));
+  sensorArr.push(new Sensor(0.66, -0.20, 0, 1, 4, "foot"));
+  sensorArr.push(new Sensor(0.66, -0.62, 0, 2, 4, "foot"));
+
+  sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 1, "foot"));
+  sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 1, "foot"));
+  sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 2, "foot"));
+  sensorArr.push(new Sensor(-0.52, -0.80, 0, 2, 2, "foot"));
+
+  sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 3, "foot"));
+  sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 3, "foot"));
+  sensorArr.push(new Sensor(-0.66, 0.06, 0, 1, 4, "foot"));
+  sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 4, "foot"));
 
   sensorArr.forEach(sensor => {
     scene.add(sensor.getMesh);

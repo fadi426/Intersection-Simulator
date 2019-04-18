@@ -6,10 +6,14 @@ export class Foot {
     private _mesh : any;
     private _foot1Path = [new THREE.Vector3(-5.0, 0.60, 0.001), new THREE.Vector3(2.0, 0.60, 0.001)];
     private _foot2Path = [new THREE.Vector3(5.0, 0.66, 0.001), new THREE.Vector3(-2.0, 0.66, 0.001)];
-    // private _foot3Path = [new THREE.Vector3(-5.0, -0.63, 0.001), new THREE.Vector3(2.0, -0.63, 0.001)];
-    // private _foot4Path = [new THREE.Vector3(-0.49, 5.0, 0.001), new THREE.Vector3(-0.49, -2.0, 0.001)];
-    private _paths = [this._foot1Path, this._foot2Path];
-    private _pathLights = [[[1,1],[1,2]],[[2,1],[2,2]]];
+    private _foot3Path = [new THREE.Vector3(0.60, 5.0, 0.001), new THREE.Vector3(0.60, -2.0, 0.001)];
+    private _foot4Path = [new THREE.Vector3(0.66, -5.0, 0.001), new THREE.Vector3(0.66, 2.0, 0.001)];
+    private _foot5Path = [new THREE.Vector3(5.0, -0.74, 0.001), new THREE.Vector3(-2.0, -0.74, 0.001)];
+    private _foot6Path = [new THREE.Vector3(-5.0, -0.80, 0.001), new THREE.Vector3(2.0, -0.80, 0.001)];
+    private _foot7Path = [new THREE.Vector3(-0.60, -5.0, 0.001), new THREE.Vector3(-0.60, 2.0, 0.001)];
+    private _foot8Path = [new THREE.Vector3(-0.66, 5.0, 0.001), new THREE.Vector3(-0.66, -2.0, 0.001)];
+    private _paths = [this._foot1Path, this._foot2Path, this._foot3Path, this._foot4Path, this._foot5Path, this._foot6Path, this._foot7Path, this._foot8Path];
+    private _pathLights = [[[1,1],[1,2]],[[2,1],[2,2]],[[3,1],[3,2]],[[4,1],[4,2]],[[5,1],[5,2]],[[6,1],[6,2]],[[7,1],[7,2]],[[8,1],[8,2]]];
     private _pathLight : any;
     private _path : Vector3[];
     private _speed = 0;
