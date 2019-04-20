@@ -209,17 +209,17 @@ function animate() {
     sensorArr.forEach(sensor => {
       let triggered = false;
       carArr.forEach(car => {
-        if((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "motor_vehicle"){
+        if((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
           triggered = true;
         }
       });
       cycleArr.forEach(cycle => {
-        if((Math.abs(cycle.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(cycle.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "cycle"){
+        if((Math.abs(cycle.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(cycle.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
           triggered = true;
         }
       });
       footArr.forEach(foot => {
-        if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "foot"){
+        if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
           triggered = true;
         }
       });
@@ -274,7 +274,7 @@ function animate() {
     cycleCreatorCounter = 0;
   }
 
-  footCreatorCounter += 0.01
+  footCreatorCounter += 0.09
   if(footCreatorCounter > 10 && footArr.length < 500){
     let foot = new Foot(names++);
     footArr.push(foot);
