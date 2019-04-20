@@ -56,7 +56,7 @@ export class Foot {
 
         let footFront = new THREE.Vector3().copy(this._mesh.position);
         let distanceFoot = this._nextPoint.distanceTo(this._mesh.position);
-        let frontDistance = 0.09 / distanceFoot;
+        let frontDistance = 0.04 / distanceFoot;
         let nextPointFoot = new THREE.Vector3().copy(this._nextPoint)
         let directionFoot = nextPointFoot.sub(this._currentPoint);
         footFront.x += directionFoot.x * frontDistance;
@@ -79,7 +79,7 @@ export class Foot {
         
         footArr.forEach(foot => {
             let footDistance = footFront.distanceTo(foot._mesh.position);
-            if(footDistance < 0.06){
+            if(footDistance < 0.01){
                 move = false;
             }
         });

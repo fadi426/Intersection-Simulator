@@ -172,15 +172,15 @@ function init() {
   sensorArr.push(new Sensor(0.66, -0.20, 0, 1, 4, "foot"));
   sensorArr.push(new Sensor(0.66, -0.62, 0, 2, 4, "foot"));
 
-  sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 1, "foot"));
-  sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 1, "foot"));
-  sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 2, "foot"));
-  sensorArr.push(new Sensor(-0.52, -0.80, 0, 2, 2, "foot"));
+  sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 5, "foot"));
+  sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 5, "foot"));
+  sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 6, "foot"));
+  sensorArr.push(new Sensor(-0.52, -0.80, 0, 2, 6, "foot"));
 
-  sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 3, "foot"));
-  sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 3, "foot"));
-  sensorArr.push(new Sensor(-0.66, 0.06, 0, 1, 4, "foot"));
-  sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 4, "foot"));
+  sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 7, "foot"));
+  sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 7, "foot"));
+  sensorArr.push(new Sensor(-0.66, 0.06, 0, 1, 8, "foot"));
+  sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 8, "foot"));
 
   sensorArr.forEach(sensor => {
     scene.add(sensor.getMesh);
@@ -209,17 +209,17 @@ function animate() {
     sensorArr.forEach(sensor => {
       let triggered = false;
       carArr.forEach(car => {
-        if((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
+        if((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "motor_vehicle"){
           triggered = true;
         }
       });
       cycleArr.forEach(cycle => {
-        if((Math.abs(cycle.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(cycle.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
+        if((Math.abs(cycle.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(cycle.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "cycle"){
           triggered = true;
         }
       });
       footArr.forEach(foot => {
-        if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05)){
+        if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "foot"){
           triggered = true;
         }
       });
