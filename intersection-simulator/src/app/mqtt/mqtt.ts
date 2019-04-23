@@ -34,10 +34,6 @@ export class Mqtt {
         this._destination = value;
     }
 
-    // public setMessage(value : string) {
-    //     this._message = value;
-    // }
-
     public connect() {
         this._client.connect({ onSuccess: this.onConnect.bind(this) });
     }
@@ -62,17 +58,12 @@ export class Mqtt {
         this._client.send(message);
     }
 
-    public emptyMessage() {
-        this._message = [];
-    }
-
     public onMessageArrived() {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
             if(message.destinationName.includes("light")){
-                //console.log('Message arrived : ' + message.payloadString);
                 this._message.push(message.payloadString);
                 this._destination = message.destinationName;
-                //console.log(message.destinationName + " " + message.payloadString);
+                console.log(message.destinationName + " " + message.payloadString);
             }
         };
     }

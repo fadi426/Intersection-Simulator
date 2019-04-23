@@ -199,10 +199,10 @@ function init() {
 function animate() {
 
   if(mqtt.getMessage != []){
-    mqtt.getMessage.forEach(message => {
-      setMode(message);
-    });
-    mqtt.emptyMessage();
+    while(mqtt.getMessage.length != 0){
+      setMode(mqtt.getMessage[0]);
+      mqtt.getMessage.shift();
+    }
   }
 
   requestAnimationFrame(animate);
