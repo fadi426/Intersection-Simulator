@@ -96,14 +96,16 @@ function init() {
   trafficLightArr.push(new TrafficLight(0.70, 0.07, 0, 2, 5, "motor_vehicle", 0));
   trafficLightArr.push(new TrafficLight(0.70, -0.07, 0, 1, 6, "motor_vehicle", 0));
 
-  trafficLightArr.push(new TrafficLight(0.35, -0.84, 0, 1, 7, "motor_vehicle", 1.58));
-  trafficLightArr.push(new TrafficLight(0.21, -0.84, 0, 2, 7, "motor_vehicle", 1.58));
-  trafficLightArr.push(new TrafficLight(0.07, -0.84, 0, 1, 8, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(0.35, -0.98, 0, 1, 7, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(0.21, -0.98, 0, 2, 7, "motor_vehicle", 1.58));
+  trafficLightArr.push(new TrafficLight(0.07, -0.98, 0, 1, 8, "motor_vehicle", 1.58));
 
   trafficLightArr.push(new TrafficLight(-0.70, -0.49, 0, 1, 9, "motor_vehicle", 0));
   trafficLightArr.push(new TrafficLight(-0.70, -0.35, 0, 1, 10, "motor_vehicle", 0));
   trafficLightArr.push(new TrafficLight(-0.70, -0.21, 0, 2, 10, "motor_vehicle", 0));
   trafficLightArr.push(new TrafficLight(-0.70, -0.07, 0, 1, 11, "motor_vehicle", 0));
+
+  trafficLightArr.push(new TrafficLight(0.40, -0.91, 0, 1, 12, "motor_vehicle", 0));
 
   //TrafficLights Cycle
   trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 1, "cycle", 0));
@@ -113,23 +115,23 @@ function init() {
 
   //TrafficLights Foot
   trafficLightArr.push(new TrafficLight(-0.42, 0.63, 0, 1, 1, "foot", 0));
-  trafficLightArr.push(new TrafficLight(0.14, 0.63, 0, 2, 1, "foot", 0));
-  trafficLightArr.push(new TrafficLight(0.0, 0.63, 0, 1, 2, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.14, 0.63, 0, 1, 2, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.0, 0.63, 0, 2, 1, "foot", 0));
   trafficLightArr.push(new TrafficLight(0.40, 0.63, 0, 2, 2, "foot", 0));
 
   trafficLightArr.push(new TrafficLight(0.63, 0.42, 0, 1, 3, "foot", 1.58));
-  trafficLightArr.push(new TrafficLight(0.63, -0.28, 0, 2, 3, "foot", 1.58));
-  trafficLightArr.push(new TrafficLight(0.63, -0.14, 0, 1, 4, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(0.63, -0.28, 0, 1, 4, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(0.63, -0.14, 0, 2, 3, "foot", 1.58));
   trafficLightArr.push(new TrafficLight(0.63, -0.56, 0, 2, 4, "foot", 1.58));
 
   trafficLightArr.push(new TrafficLight(0.40, -0.77, 0, 1, 5, "foot", 0));
-  trafficLightArr.push(new TrafficLight(-0.14, -0.77, 0, 2, 5, "foot", 0));
-  trafficLightArr.push(new TrafficLight(0.0, -0.77, 0, 1, 6, "foot", 0));
+  trafficLightArr.push(new TrafficLight(-0.14, -0.77, 0, 1, 6, "foot", 0));
+  trafficLightArr.push(new TrafficLight(0.0, -0.77, 0, 2, 5, "foot", 0));
   trafficLightArr.push(new TrafficLight(-0.42, -0.77, 0, 2, 6, "foot", 0));
 
   trafficLightArr.push(new TrafficLight(-0.63, -0.56, 0, 1, 7, "foot", 1.58));
-  trafficLightArr.push(new TrafficLight(-0.63, 0.14, 0, 2, 7, "foot", 1.58));
-  trafficLightArr.push(new TrafficLight(-0.63, 0.0, 0, 1, 8, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.63, 0.14, 0, 1, 8, "foot", 1.58));
+  trafficLightArr.push(new TrafficLight(-0.63, 0.0, 0, 2, 7, "foot", 1.58));
   trafficLightArr.push(new TrafficLight(-0.63, 0.42, 0, 2, 8, "foot", 1.58));
 
   trafficLightArr.forEach(trafficLight => {
@@ -146,14 +148,16 @@ function init() {
   sensorArr.push(new Sensor(0.78, 0.07, 0, 2, 5, "motor_vehicle"));
   sensorArr.push(new Sensor(0.78, -0.07, 0, 1, 6, "motor_vehicle"));
 
-  sensorArr.push(new Sensor(0.35, -0.92, 0, 1, 7, "motor_vehicle"));
-  sensorArr.push(new Sensor(0.21, -0.92, 0, 2, 7, "motor_vehicle"));
-  sensorArr.push(new Sensor(0.07, -0.92, 0, 1, 8, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.35, -1.06, 0, 1, 7, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.21, -1.06, 0, 2, 7, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.07, -1.06, 0, 1, 8, "motor_vehicle"));
 
   sensorArr.push(new Sensor(-0.78, -0.49, 0, 1, 9, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.78, -0.35, 0, 1, 10, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.78, -0.21, 0, 2, 10, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.78, -0.07, 0, 1, 11, "motor_vehicle"));
+
+  sensorArr.push(new Sensor(0.48, -0.91, 0, 1, 12, "motor_vehicle"));
 
   //Sensors Cycle
   sensorArr.push(new Sensor(0.48, 0.49, 0, 1, 1, "cycle"));
@@ -259,7 +263,7 @@ function animate() {
   }
 
   carCreatorCounter += 0.01
-  if(carCreatorCounter > 0.60 && carArr.length < 500){
+  if(carCreatorCounter > 0.6 && carArr.length < 500){
     let car = new Car(names++);
     carArr.push(car);
     scene.add(car.getMesh);
@@ -275,7 +279,7 @@ function animate() {
   }
 
   footCreatorCounter += 0.01
-  if(footCreatorCounter > 10 && footArr.length < 500){
+  if(footCreatorCounter > 5 && footArr.length < 500){
     let foot = new Foot(names++);
     footArr.push(foot);
     scene.add(foot.getMesh);

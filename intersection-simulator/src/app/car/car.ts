@@ -19,8 +19,9 @@ export class Car {
     private _car13Path = [new THREE.Vector3(-5.0, -0.21, 0.001), new THREE.Vector3(-0.35, -0.21, 0.001), new THREE.Vector3(0.35, -0.35, 0.001), new THREE.Vector3(2.0, -0.35, 0.001)];
     private _car14Path = [new THREE.Vector3(-5.0, -0.07, 0.001), new THREE.Vector3(-0.35, -0.07, 0.001), new THREE.Vector3(0.35, 0.21), new THREE.Vector3(0.35, 2.0, 0.001)];
     private _car15Path = [new THREE.Vector3(0.07, -5.0, 0.001), new THREE.Vector3(0.07, 0.35, 0.001), new THREE.Vector3(-2.0, 0.35, 0.001)];
-    private _paths = [this._car1Path,this._car2Path,this._car3Path,this._car4Path,this._car5Path,this._car6Path,this._car7Path,this._car8Path,this._car9Path,this._car10Path,this._car11Path,this._car12Path,this._car13Path,this._car14Path,this._car15Path];
-    private _pathLights = [[[1,1]],[[2,1]],[[3,1]],[[4,1]],[[5,1]],[[5,2]],[[6,1]],[[7,1]],[[7,2]],[[8,1]],[[9,1]],[[10,1]],[[10,2]],[[11,1]],[[8,1]]];
+    private _car16Path = [new THREE.Vector3(0.76, -5.0, 0.001), new THREE.Vector3(0.76, -0.91, 0.001), new THREE.Vector3(-0.21, -0.91, 0.001), new THREE.Vector3(-0.21, -2.0, 0.001)];
+    private _paths = [this._car1Path,this._car2Path,this._car3Path,this._car4Path,this._car5Path,this._car6Path,this._car7Path,this._car8Path,this._car9Path,this._car10Path,this._car11Path,this._car12Path,this._car13Path,this._car14Path,this._car15Path,this._car16Path];
+    private _pathLights = [[[1,1]],[[2,1]],[[3,1]],[[4,1]],[[5,1]],[[5,2]],[[6,1]],[[7,1]],[[7,2]],[[8,1]],[[9,1]],[[10,1]],[[10,2]],[[11,1]],[[8,1]],[[12,1]]];
     private _path : Vector3[];
     private _pathLight : any;
     private _speed = 0;
