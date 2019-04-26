@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import { Paho } from 'ng2-mqtt/mqttws31';
 import { Car } from '../car/car';
 import { Cycle } from '../cycle/cycle';
 import { Foot } from '../foot/foot';
@@ -8,9 +7,7 @@ import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
 import { TrafficLight } from '../trafficLight/traffic-light'
 import { Sensor } from '../sensor/sensor'
-import { StopLine } from '../StopLine/stop-line'
 import { Mqtt } from '../mqtt/mqtt';
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-world',
@@ -29,8 +26,6 @@ export class WorldComponent implements OnInit {
 var camera, scene, renderer;
 var mqtt;
 var groupID;
-var mqttMessage = null;
-var sensorCurrent = 0;
 var grass;
 var carArr = [];
 var cycleArr = [];

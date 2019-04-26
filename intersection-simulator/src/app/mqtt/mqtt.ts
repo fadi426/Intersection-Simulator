@@ -3,12 +3,10 @@ import { Paho } from 'ng2-mqtt/mqttws31';
 export class Mqtt {
     private _client: Paho.MQTT.Client;
     private _connected: boolean;
-    private _subscribeOptions: any;
     private _message = [];
 
     constructor(private _clientId: string, private _groupId: string) {
         this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId);
-        //this._message = null;
         this.onConnectionLost();
         this.onMessageArrived();
         this.connect();
