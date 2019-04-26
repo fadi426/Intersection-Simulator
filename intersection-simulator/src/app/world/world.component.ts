@@ -50,13 +50,12 @@ var clock = new THREE.Clock(true);
 init();
 animate();
 
-function setMode(mode) {
+function setMode(message) {
   trafficLightArr.forEach(trafficLight => {
-    let message = mqtt.getDestination.split("/");
-    if(trafficLight.getGroup == message[1] && trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
+    let destination = message.destinationName.split("/");
+    if(trafficLight.getGroup == destination[1] && trafficLight.getGroupId == destination[2] && trafficLight.getId == destination[4])
     {
-      trafficLight.setMode = mode;
-      mqtt.setDestination(null);
+      trafficLight.setMode = message.payloadString;
     }
   });
 }
@@ -179,7 +178,7 @@ function init() {
   sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 5, "foot"));
   sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 5, "foot"));
   sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 6, "foot"));
-  sensorArr.push(new Sensor(-0.52, -0.80, 0, 2, 6, "foot"));
+  sensorArr.push(new Sensor(-0.48, -0.80, 0, 2, 6, "foot"));
 
   sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 7, "foot"));
   sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 7, "foot"));
@@ -200,8 +199,7 @@ function animate() {
 
   if(mqtt.getMessage != []){
     while(mqtt.getMessage.length != 0){
-      setMode(mqtt.getMessage[0]);
-      mqtt.getMessage.shift();
+      setMode(mqtt.getMessage.shift());
     }
   }
 

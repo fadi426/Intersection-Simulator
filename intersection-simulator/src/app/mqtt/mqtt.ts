@@ -5,7 +5,6 @@ export class Mqtt {
     private _connected: boolean;
     private _subscribeOptions: any;
     private _message = [];
-    private _destination = null;
 
     constructor(private _clientId: string, private _groupId: string) {
         this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId);
@@ -23,17 +22,6 @@ export class Mqtt {
         return this._message;
     }
 
-    public get getDestination(){
-        if(this._destination == null)
-        return "-1";
-        else
-        return this._destination;
-    }
-
-    public setDestination(value : string){
-        this._destination = value;
-    }
-
     public connect() {
         this._client.connect({ onSuccess: this.onConnect.bind(this) });
     }
@@ -45,14 +33,10 @@ export class Mqtt {
             invocationContext: { foo: true },  // Passed to success / failure callback
         };
         this._client.subscribe(this._groupId, subscribeOptions);
-        //this.sendMessage('1');
         this._connected = true;
     }
 
     public sendMessage(msg : string, des: string) {
-        if(des.includes("foot")){
-            console.log(des + "   " + msg);
-        }
         let message = new Paho.MQTT.Message(msg);
         message.destinationName = des;
         this._client.send(message);
@@ -61,9 +45,16 @@ export class Mqtt {
     public onMessageArrived() {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
             if(message.destinationName.includes("light")){
-                this._message.push(message.payloadString);
-                this._destination = message.destinationName;
-                console.log(message.destinationName + " " + message.payloadString);
+				this._message.push(message);
+				if(message.payloadString == "0"){
+					console.log("%c" + message.destinationName + " " + message.payloadString, 'color: #ff0000');
+				}
+				if(message.payloadString == "1"){
+					console.log("%c" + message.destinationName + " " + message.payloadString, 'color: #ffa500');
+				}
+				if(message.payloadString == "2"){
+					console.log("%c" + message.destinationName + " " + message.payloadString, 'color: #00ff00');
+				}
             }
         };
     }
