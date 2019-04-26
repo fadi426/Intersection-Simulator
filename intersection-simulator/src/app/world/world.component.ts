@@ -256,14 +256,14 @@ function animate() {
   }
 
   carCreatorCounter += 0.01
-  if(carCreatorCounter > 0.6 && carArr.length < 500){
+  if(carCreatorCounter > 0.3 && carArr.length < 500){
     let car = new Car(names++, paths.getRandomCarPath());
     carArr.push(car);
     scene.add(car.getMesh);
     carCreatorCounter = 0;
   }
 
-  cycleCreatorCounter += 0.1
+  cycleCreatorCounter += 0.01
   if(cycleCreatorCounter > 10 && cycleArr.length < 500){
     let cycle = new Cycle(names++, paths.getRandomCyclePath());
     cycleArr.push(cycle);
@@ -271,7 +271,7 @@ function animate() {
     cycleCreatorCounter = 0;
   }
 
-  footCreatorCounter += 0.1
+  footCreatorCounter += 0.01
   if(footCreatorCounter > 5 && footArr.length < 500){
     let foot = new Foot(names++, paths.getRandomFootPath());
     footArr.push(foot);

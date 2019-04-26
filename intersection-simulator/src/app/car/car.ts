@@ -13,7 +13,7 @@ export class Car {
     private _currentPoint : Vector3;
     private _nextPoint : Vector3;
     private _reachedEnd : boolean;
-    private _currentPosition : Vector3;
+    private _calculatedNextPosition : Vector3;
     private _currentNode = 1;
 
     constructor(Name : Number, path : path){
@@ -26,7 +26,7 @@ export class Car {
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.name = Name;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);
-        this._currentPosition = new THREE.Vector3().copy(this._path[0]);
+        this._calculatedNextPosition = new THREE.Vector3().copy(this._path[0]);
         if(this._path[0].y != this._path[1].y){
             this._mesh.rotateZ(1.58);
         }
@@ -99,9 +99,9 @@ export class Car {
         let speed = this._speed / distance;
         let nextPoint = new THREE.Vector3().copy(this._nextPoint)
         let direction = nextPoint.sub(this._currentPoint);
-        this._currentPosition.x += direction.x * speed;
-        this._currentPosition.y += direction.y * speed;
-        this._mesh.position.set(this._currentPosition.x, this._currentPosition.y, this._currentPosition.z);
+        this._calculatedNextPosition.x += direction.x * speed;
+        this._calculatedNextPosition.y += direction.y * speed;
+        this._mesh.position.set(this._calculatedNextPosition.x, this._calculatedNextPosition.y, this._calculatedNextPosition.z);
     }
 
     public get getMesh(){

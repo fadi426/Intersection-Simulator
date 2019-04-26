@@ -13,20 +13,20 @@ export class Foot {
     private _currentPoint : Vector3;
     private _nextPoint : Vector3;
     private _reachedEnd : boolean;
-    private _currentPosition : Vector3;
+    private _calculatedNextPosition : Vector3;
     private _currentNode = 1;
 
     constructor(Name : Number, path : path){
         this._path = path.getPath;
         this._pathLight = path.getPathLight;
-        this._currentPoint = this._path[0];
-        this._nextPoint = this._path[1];
+        this._currentPoint = new THREE.Vector3().copy(this._path[0]);
+        this._nextPoint = new THREE.Vector3().copy(this._path[1]);
         let geometry = new THREE.BoxGeometry(0.015, 0.015, 0.05);
         let material = new THREE.MeshBasicMaterial({ color: 0xc7ea46 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.name = Name;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);
-        this._currentPosition = this._path[0];
+        this._calculatedNextPosition = new THREE.Vector3().copy(this._path[0]);
         if(this._path[0].y != this._path[1].y){
             this._mesh.rotateZ(1.58);
         }
@@ -47,7 +47,7 @@ export class Foot {
         let distanceFoot = this._nextPoint.distanceTo(this._mesh.position);
         let frontDistance = 0.04 / distanceFoot;
         let nextPointFoot = new THREE.Vector3().copy(this._nextPoint)
-        let directionFoot = nextPointFoot.sub(this._currentPoint);
+        let directionFoot = nextPointFoot.sub(this._mesh.position);
         footFront.x += directionFoot.x * frontDistance;
         footFront.y += directionFoot.y * frontDistance;
 
@@ -99,9 +99,9 @@ export class Foot {
         let speed = this._speed / distance;
         let nextPoint = new THREE.Vector3().copy(this._nextPoint)
         let direction = nextPoint.sub(this._currentPoint);
-        this._currentPosition.x += direction.x * speed;
-        this._currentPosition.y += direction.y * speed;
-        this._mesh.position.set(this._currentPosition.x, this._currentPosition.y, this._currentPosition.z);
+        this._calculatedNextPosition.x += direction.x * speed;
+        this._calculatedNextPosition.y += direction.y * speed;
+        this._mesh.position.set(this._calculatedNextPosition.x, this._calculatedNextPosition.y, this._calculatedNextPosition.z);
     }
 
     public get getMesh(){
