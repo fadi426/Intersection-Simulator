@@ -58,9 +58,9 @@ function setMode(message) {
 
 function init() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-  camera.position.z = 4;
-  //camera.position.y = 0;
-  camera.rotation.x = 0;
+  camera.position.z = 6;
+  camera.position.y = 0;
+  camera.position.x = 4;
 
   scene = new THREE.Scene();
 
@@ -75,7 +75,7 @@ function init() {
   // scene.add(grass.getMesh);
 
   //Road
-  road = new Road(10, 10, 0.01,0x808080)
+  road = new Road(40, 10, 0.01,0x808080)
   scene.add(road.getMesh);
 
   // road2 = new Road(0.2, 1, 0.01,0x808080)
@@ -101,6 +101,9 @@ function init() {
   trafficLightArr.push(new TrafficLight(-0.70, -0.07, 0, 1, 11, "motor_vehicle", 0));
 
   trafficLightArr.push(new TrafficLight(0.40, -0.91, 0, 1, 12, "motor_vehicle", 0));
+
+  trafficLightArr.push(new TrafficLight(9.6, -0.07, 0, 1, 13, "motor_vehicle", 0));
+  trafficLightArr.push(new TrafficLight(9.0, -0.49, 0, 2, 13, "motor_vehicle", 0));
 
   //TrafficLights Cycle
   trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 1, "cycle", 0));
@@ -162,23 +165,23 @@ function init() {
 
   //Sensors Foot
   sensorArr.push(new Sensor(-0.48, 0.60, 0, 1, 1, "foot"));
-  sensorArr.push(new Sensor(0.08, 0.60, 0, 2, 1, "foot"));
-  sensorArr.push(new Sensor(0.06, 0.66, 0, 1, 2, "foot"));
+  sensorArr.push(new Sensor(0.08, 0.60, 0, 1, 2, "foot"));
+  sensorArr.push(new Sensor(0.06, 0.66, 0, 2, 1, "foot"));
   sensorArr.push(new Sensor(0.46, 0.66, 0, 2, 2, "foot"));
 
   sensorArr.push(new Sensor(0.60, 0.48, 0, 1, 3, "foot"));
-  sensorArr.push(new Sensor(0.60, -0.22, 0, 2, 3, "foot"));
-  sensorArr.push(new Sensor(0.66, -0.20, 0, 1, 4, "foot"));
+  sensorArr.push(new Sensor(0.60, -0.22, 0, 1, 1, "foot"));
+  sensorArr.push(new Sensor(0.66, -0.20, 0, 2, 3, "foot"));
   sensorArr.push(new Sensor(0.66, -0.62, 0, 2, 4, "foot"));
 
   sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 5, "foot"));
-  sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 5, "foot"));
-  sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 6, "foot"));
+  sensorArr.push(new Sensor(-0.08, -0.74, 0, 1, 6, "foot"));
+  sensorArr.push(new Sensor(-0.06, -0.80, 0, 2, 5, "foot"));
   sensorArr.push(new Sensor(-0.48, -0.80, 0, 2, 6, "foot"));
 
   sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 7, "foot"));
-  sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 7, "foot"));
-  sensorArr.push(new Sensor(-0.66, 0.06, 0, 1, 8, "foot"));
+  sensorArr.push(new Sensor(-0.60, 0.08, 0, 1, 8, "foot"));
+  sensorArr.push(new Sensor(-0.66, 0.06, 0, 2, 7, "foot"));
   sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 8, "foot"));
 
   sensorArr.forEach(sensor => {
