@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
-import { Paho } from 'ng2-mqtt/mqttws31';
 import { Car } from '../car/car';
 import { Cycle } from '../cycle/cycle';
 import { Foot } from '../foot/foot';
@@ -8,9 +7,7 @@ import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
 import { TrafficLight } from '../trafficLight/traffic-light'
 import { Sensor } from '../sensor/sensor'
-import { StopLine } from '../StopLine/stop-line'
 import { Mqtt } from '../mqtt/mqtt';
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 import { Paths } from '../paths/paths';
 
 @Component({
@@ -30,8 +27,6 @@ export class WorldComponent implements OnInit {
 var camera, scene, renderer;
 var mqtt;
 var groupID;
-var mqttMessage = null;
-var sensorCurrent = 0;
 var grass;
 var carArr = [];
 var cycleArr = [];
@@ -51,13 +46,12 @@ var clock = new THREE.Clock(true);
 init();
 animate();
 
-function setMode(mode) {
+function setMode(message) {
   trafficLightArr.forEach(trafficLight => {
-    let message = mqtt.getDestination.split("/");
-    if(trafficLight.getGroup == message[1] && trafficLight.getGroupId == message[2] && trafficLight.getId == message[4])
+    let destination = message.destinationName.split("/");
+    if(trafficLight.getGroup == destination[1] && trafficLight.getGroupId == destination[2] && trafficLight.getId == destination[4])
     {
-      trafficLight.setMode = mode;
-      mqtt.setDestination(null);
+      trafficLight.setMode = message.payloadString;
     }
   });
 }
@@ -180,7 +174,7 @@ function init() {
   sensorArr.push(new Sensor(0.46, -0.74, 0, 1, 5, "foot"));
   sensorArr.push(new Sensor(-0.08, -0.74, 0, 2, 5, "foot"));
   sensorArr.push(new Sensor(-0.06, -0.80, 0, 1, 6, "foot"));
-  sensorArr.push(new Sensor(-0.52, -0.80, 0, 2, 6, "foot"));
+  sensorArr.push(new Sensor(-0.48, -0.80, 0, 2, 6, "foot"));
 
   sensorArr.push(new Sensor(-0.60, -0.62, 0, 1, 7, "foot"));
   sensorArr.push(new Sensor(-0.60, 0.08, 0, 2, 7, "foot"));
@@ -200,8 +194,7 @@ function init() {
 function animate() {
   if(mqtt.getMessage != []){
     while(mqtt.getMessage.length != 0){
-      setMode(mqtt.getMessage[0]);
-      mqtt.getMessage.shift();
+      setMode(mqtt.getMessage.shift());
     }
   }
 
@@ -270,21 +263,21 @@ function animate() {
     carCreatorCounter = 0;
   }
 
-  // cycleCreatorCounter += 0.1
-  // if(cycleCreatorCounter > 10 && cycleArr.length < 500){
-  //   let cycle = new Cycle(names++, paths.getRandomCyclePath());
-  //   cycleArr.push(cycle);
-  //   scene.add(cycle.getMesh);
-  //   cycleCreatorCounter = 0;
-  // }
+  cycleCreatorCounter += 0.1
+  if(cycleCreatorCounter > 10 && cycleArr.length < 500){
+    let cycle = new Cycle(names++, paths.getRandomCyclePath());
+    cycleArr.push(cycle);
+    scene.add(cycle.getMesh);
+    cycleCreatorCounter = 0;
+  }
 
-  // footCreatorCounter += 0.1
-  // if(footCreatorCounter > 5 && footArr.length < 500){
-  //   let foot = new Foot(names++, paths.getRandomFootPath());
-  //   footArr.push(foot);
-  //   scene.add(foot.getMesh);
-  //   footCreatorCounter = 0;
-  // }
+  footCreatorCounter += 0.1
+  if(footCreatorCounter > 5 && footArr.length < 500){
+    let foot = new Foot(names++, paths.getRandomFootPath());
+    footArr.push(foot);
+    scene.add(foot.getMesh);
+    footCreatorCounter = 0;
+  }
 
   trafficLightArr.forEach(trafficLight => {
     trafficLight.changeColor()
