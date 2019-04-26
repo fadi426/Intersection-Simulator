@@ -51,7 +51,7 @@ export class Mqtt {
 
     public sendMessage(msg : string, des: string) {
         if(des.includes("foot")){
-            console.log(des + "   " + msg);
+            // console.log(des + "   " + msg);
         }
         let message = new Paho.MQTT.Message(msg);
         message.destinationName = des;
@@ -63,7 +63,7 @@ export class Mqtt {
             if(message.destinationName.includes("light")){
                 this._message.push(message.payloadString);
                 this._destination = message.destinationName;
-                console.log(message.destinationName + " " + message.payloadString);
+                // console.log(message.destinationName + " " + message.payloadString);
             }
         };
     }

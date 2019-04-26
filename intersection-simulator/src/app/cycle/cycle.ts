@@ -1,15 +1,10 @@
 import * as THREE from 'three';
 import { TrafficLight } from '../trafficLight/traffic-light';
+import { path } from '../path/path';
 import { Vector3 } from 'three';
 
 export class Cycle {
     private _mesh : any;
-    private _cycle1Path = [new THREE.Vector3(5.0, 0.49, 0.001), new THREE.Vector3(-2.0, 0.49, 0.001)];
-    private _cycle2Path = [new THREE.Vector3(0.49, -5.0, 0.001), new THREE.Vector3(0.49, 2.0, 0.001)];
-    private _cycle3Path = [new THREE.Vector3(-5.0, -0.63, 0.001), new THREE.Vector3(2.0, -0.63, 0.001)];
-    private _cycle4Path = [new THREE.Vector3(-0.49, 5.0, 0.001), new THREE.Vector3(-0.49, -2.0, 0.001)];
-    private _paths = [this._cycle1Path, this._cycle2Path, this._cycle3Path, this._cycle4Path];
-    private _pathLights = [[[1,1]],[[2,1]],[[3,1]],[[4,1]]];
     private _pathLight : any;
     private _path : Vector3[];
     private _speed = 0;
@@ -17,15 +12,13 @@ export class Cycle {
     private _respawnDistance = 0.02;
     private _currentPoint : Vector3;
     private _nextPoint : Vector3;
-    private _pathNumber : number;
     private _reachedEnd : boolean;
     private _currentPosition : Vector3;
     private _currentNode = 1;
 
-    constructor(Name : Number){
-        this._pathNumber = Math.floor(Math.random() * this._paths.length);
-        this._path = this._paths[this._pathNumber]
-        this._pathLight = this._pathLights[this._pathNumber];
+    constructor(Name : Number, path : path){
+        this._path = path.getPath;
+        this._pathLight = path.getPathLight;
         this._currentPoint = this._path[0];
         this._nextPoint = this._path[1];
         let geometry = new THREE.BoxGeometry(0.07, 0.015, 0.05);
@@ -46,8 +39,8 @@ export class Cycle {
 
         if(this._mesh.position.distanceTo(this._path[this._currentNode]) < this._respawnDistance && this._currentNode < this._path.length - 1){
             this._currentNode++;
-            this._currentPoint.copy(this._paths[this._pathNumber][this._currentNode - 1]);
-            this._nextPoint.copy(this._paths[this._pathNumber][this._currentNode]);
+            this._currentPoint.copy(this._path[this._currentNode - 1]);
+            this._nextPoint.copy(this._path[this._currentNode]);
         }
 
         let cycleFront = new THREE.Vector3().copy(this._mesh.position);

@@ -11,6 +11,7 @@ import { Sensor } from '../sensor/sensor'
 import { StopLine } from '../StopLine/stop-line'
 import { Mqtt } from '../mqtt/mqtt';
 import { transformAll } from '@angular/compiler/src/render3/r3_ast';
+import { Paths } from '../paths/paths';
 
 @Component({
   selector: 'app-world',
@@ -44,7 +45,7 @@ var road;
 
 var trafficLightArr = [];
 var sensorArr = [];
-
+var paths = new Paths; 
 var clock = new THREE.Clock(true);
 
 init();
@@ -197,7 +198,6 @@ function init() {
 }
 
 function animate() {
-
   if(mqtt.getMessage != []){
     while(mqtt.getMessage.length != 0){
       setMode(mqtt.getMessage[0]);
@@ -264,27 +264,27 @@ function animate() {
 
   carCreatorCounter += 0.01
   if(carCreatorCounter > 0.6 && carArr.length < 500){
-    let car = new Car(names++);
+    let car = new Car(names++, paths.getRandomCarPath());
     carArr.push(car);
     scene.add(car.getMesh);
     carCreatorCounter = 0;
   }
 
-  cycleCreatorCounter += 0.01
-  if(cycleCreatorCounter > 10 && cycleArr.length < 500){
-    let cycle = new Cycle(names++);
-    cycleArr.push(cycle);
-    scene.add(cycle.getMesh);
-    cycleCreatorCounter = 0;
-  }
+  // cycleCreatorCounter += 0.1
+  // if(cycleCreatorCounter > 10 && cycleArr.length < 500){
+  //   let cycle = new Cycle(names++, paths.getRandomCyclePath());
+  //   cycleArr.push(cycle);
+  //   scene.add(cycle.getMesh);
+  //   cycleCreatorCounter = 0;
+  // }
 
-  footCreatorCounter += 0.01
-  if(footCreatorCounter > 5 && footArr.length < 500){
-    let foot = new Foot(names++);
-    footArr.push(foot);
-    scene.add(foot.getMesh);
-    footCreatorCounter = 0;
-  }
+  // footCreatorCounter += 0.1
+  // if(footCreatorCounter > 5 && footArr.length < 500){
+  //   let foot = new Foot(names++, paths.getRandomFootPath());
+  //   footArr.push(foot);
+  //   scene.add(foot.getMesh);
+  //   footCreatorCounter = 0;
+  // }
 
   trafficLightArr.forEach(trafficLight => {
     trafficLight.changeColor()
