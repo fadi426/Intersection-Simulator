@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Car } from '../car/car';
 import { Cycle } from '../cycle/cycle';
 import { Foot } from '../foot/foot';
+import { Vessel } from '../vessel/vessel';
 import { Ground } from '../ground/ground';
 import { Road } from '../road/road'
 import { TrafficLight } from '../trafficLight/traffic-light'
@@ -31,10 +32,12 @@ var grass;
 var carArr = [];
 var cycleArr = [];
 var footArr = [];
+var vesselArr = [];
 var names = 1;
 var carCreatorCounter = 0;
 var cycleCreatorCounter = 0;
 var footCreatorCounter = 0;
+var vesselCreatorCounter = 0;
 
 var road;
 
@@ -111,6 +114,9 @@ function init() {
   trafficLightArr.push(new TrafficLight(-0.42, -0.63, 0, 1, 3, "cycle", 0));
   trafficLightArr.push(new TrafficLight(-0.49, 0.42, 0, 1, 4, "cycle", 1.58));
 
+  trafficLightArr.push(new TrafficLight(9.6, 0.07, 0, 1, 5, "cycle", 0));
+  trafficLightArr.push(new TrafficLight(9.0, -0.63, 0, 2, 5, "cycle", 0));
+
   //TrafficLights Foot
   trafficLightArr.push(new TrafficLight(-0.42, 0.63, 0, 1, 1, "foot", 0));
   trafficLightArr.push(new TrafficLight(0.14, 0.63, 0, 1, 2, "foot", 0));
@@ -131,6 +137,12 @@ function init() {
   trafficLightArr.push(new TrafficLight(-0.63, 0.14, 0, 1, 8, "foot", 1.58));
   trafficLightArr.push(new TrafficLight(-0.63, 0.0, 0, 2, 7, "foot", 1.58));
   trafficLightArr.push(new TrafficLight(-0.63, 0.42, 0, 2, 8, "foot", 1.58));
+
+  trafficLightArr.push(new TrafficLight(9.6, 0.21, 0, 1, 9, "foot", 0));
+  trafficLightArr.push(new TrafficLight(9.0, -0.77, 0, 2, 9, "foot", 0));
+
+  trafficLightArr.push(new TrafficLight(9.4, -0.91, 0, 1, 1, "vessel", 1.58));
+  trafficLightArr.push(new TrafficLight(9.2, 0.35, 0, 1, 2, "vessel", 1.58));
 
   trafficLightArr.forEach(trafficLight => {
     scene.add(trafficLight.getMesh);
@@ -184,6 +196,9 @@ function init() {
   sensorArr.push(new Sensor(-0.66, 0.06, 0, 2, 7, "foot"));
   sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 8, "foot"));
 
+  sensorArr.push(new Sensor(9.4, -0.99, 0, 1, 1, "vessel"));
+  sensorArr.push(new Sensor(9.2, 0.43, 0, 1, 2, "vessel"));
+
   sensorArr.forEach(sensor => {
     scene.add(sensor.getMesh);
   });
@@ -222,6 +237,11 @@ function animate() {
         if((Math.abs(foot.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "foot"){
           triggered = true;
         }
+	  });
+	  vesselArr.forEach(vessel => {
+        if((Math.abs(vessel.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(vessel.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "vessel"){
+          triggered = true;
+        }
       });
       if(triggered && sensor.getSensorValue == 0){
         mqtt.sendMessage("1", groupID + "/" + sensor.getType + "/" + sensor.getSensorGroup + "/sensor/" + sensor.getId);
@@ -258,6 +278,14 @@ function animate() {
     }
   }
 
+  for(let i = vesselArr.length - 1; i > -1; i--){
+    vesselArr[i].move(trafficLightArr, vesselArr);
+    if(vesselArr[i].getReachedEnd){
+      scene.remove(scene.getObjectByName(vesselArr[i].getMesh.name));
+      vesselArr.splice(i,1);
+    }
+  }
+
   carCreatorCounter += 0.01
   if(carCreatorCounter > 0.3 && carArr.length < 500){
     let car = new Car(names++, paths.getRandomCarPath());
@@ -280,6 +308,14 @@ function animate() {
     footArr.push(foot);
     scene.add(foot.getMesh);
     footCreatorCounter = 0;
+  }
+
+  vesselCreatorCounter += 0.01
+  if(vesselCreatorCounter > 15 && vesselArr.length < 500){
+    let vessel = new Vessel(names++, paths.getRandomVesselPath());
+    vesselArr.push(vessel);
+    scene.add(vessel.getMesh);
+    vesselCreatorCounter = 0;
   }
 
   trafficLightArr.forEach(trafficLight => {
