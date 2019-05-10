@@ -150,22 +150,44 @@ function init() {
 
   //Sensors Car
   sensorArr.push(new Sensor(-0.35, 0.78, 0, 1, 1, "motor_vehicle"));
+  sensorArr.push(new Sensor(-0.35, 1.68, 0, 2, 1, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.21, 0.78, 0, 1, 2, "motor_vehicle"));
+  sensorArr.push(new Sensor(-0.21, 1.68, 0, 2, 2, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.07, 0.78, 0, 1, 3, "motor_vehicle"));
+  sensorArr.push(new Sensor(-0.07, 1.68, 0, 2, 3, "motor_vehicle"));
 
   sensorArr.push(new Sensor(0.78, 0.35, 0, 1, 4, "motor_vehicle"));
+  sensorArr.push(new Sensor(1.58, 0.35, 0, 2, 4, "motor_vehicle"));
+  sensorArr.push(new Sensor(2.38, 0.35, 0, 3, 4, "motor_vehicle"));
   sensorArr.push(new Sensor(0.78, 0.21, 0, 1, 5, "motor_vehicle"));
-  sensorArr.push(new Sensor(0.78, 0.07, 0, 2, 5, "motor_vehicle"));
+  sensorArr.push(new Sensor(1.58, 0.21, 0, 2, 5, "motor_vehicle"));
+  sensorArr.push(new Sensor(2.38, 0.21, 0, 3, 5, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.78, 0.07, 0, 4, 5, "motor_vehicle"));
+  sensorArr.push(new Sensor(1.58, 0.07, 0, 5, 5, "motor_vehicle"));
+  sensorArr.push(new Sensor(2.38, 0.07, 0, 6, 5, "motor_vehicle"));
   sensorArr.push(new Sensor(0.78, -0.07, 0, 1, 6, "motor_vehicle"));
+  sensorArr.push(new Sensor(1.58, -0.07, 0, 2, 6, "motor_vehicle"));
+  sensorArr.push(new Sensor(2.38, -0.07, 0, 3, 6, "motor_vehicle"));
 
   sensorArr.push(new Sensor(0.35, -1.06, 0, 1, 7, "motor_vehicle"));
-  sensorArr.push(new Sensor(0.21, -1.06, 0, 2, 7, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.35, -1.96, 0, 2, 7, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.21, -1.06, 0, 3, 7, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.21, -1.96, 0, 4, 7, "motor_vehicle"));
   sensorArr.push(new Sensor(0.07, -1.06, 0, 1, 8, "motor_vehicle"));
+  sensorArr.push(new Sensor(0.07, -1.96, 0, 2, 8, "motor_vehicle"));
 
   sensorArr.push(new Sensor(-0.78, -0.49, 0, 1, 9, "motor_vehicle"));
+  sensorArr.push(new Sensor(-1.58, -0.49, 0, 2, 9, "motor_vehicle"));
+  sensorArr.push(new Sensor(-2.38, -0.49, 0, 3, 9, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.78, -0.35, 0, 1, 10, "motor_vehicle"));
-  sensorArr.push(new Sensor(-0.78, -0.21, 0, 2, 10, "motor_vehicle"));
+  sensorArr.push(new Sensor(-1.58, -0.35, 0, 2, 10, "motor_vehicle"));
+  sensorArr.push(new Sensor(-2.38, -0.35, 0, 3, 10, "motor_vehicle"));
+  sensorArr.push(new Sensor(-0.78, -0.21, 0, 4, 10, "motor_vehicle"));
+  sensorArr.push(new Sensor(-1.58, -0.21, 0, 5, 10, "motor_vehicle"));
+  sensorArr.push(new Sensor(-2.38, -0.21, 0, 6, 10, "motor_vehicle"));
   sensorArr.push(new Sensor(-0.78, -0.07, 0, 1, 11, "motor_vehicle"));
+  sensorArr.push(new Sensor(-1.58, -0.07, 0, 2, 11, "motor_vehicle"));
+  sensorArr.push(new Sensor(-2.38, -0.07, 0, 3, 11, "motor_vehicle"));
 
   sensorArr.push(new Sensor(0.48, -0.91, 0, 1, 12, "motor_vehicle"));
 
