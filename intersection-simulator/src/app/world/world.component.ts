@@ -120,7 +120,7 @@ function init() {
 	trafficLightArr.push(new TrafficLight(0.40, -0.91, 0, 1, 12, "motor_vehicle", 0, 0));
 
 	trafficLightArr.push(new TrafficLight(9.6, -0.07, 0, 1, 13, "motor_vehicle", 0, 2));
-	trafficLightArr.push(new TrafficLight(9.0, -0.49, 0, 2, 13, "motor_vehicle", 0, 0));
+	trafficLightArr.push(new TrafficLight(9.0, -0.49, 0, 2, 13, "motor_vehicle", 0, 2));
 
 	//TrafficLights Cycle
 	trafficLightArr.push(new TrafficLight(0.40, 0.49, 0, 1, 1, "cycle", 0, 0));
@@ -264,7 +264,7 @@ function animate() {
 		sensorArr.forEach(sensor => {
 			let triggered = false;
 			carArr.forEach(car => {
-				if ((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.05) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.05) && sensor.getType == "motor_vehicle") {
+				if ((Math.abs(car.getMesh.position.x - sensor.getMesh.position.x) < 0.07) && (Math.abs(car.getMesh.position.y - sensor.getMesh.position.y) < 0.07) && sensor.getType == "motor_vehicle") {
 					triggered = true;
 				}
 			});
