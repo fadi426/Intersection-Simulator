@@ -22,7 +22,7 @@ export class Vessel {
         this._currentPoint = new THREE.Vector3().copy(this._path[0]);
         this._nextPoint = new THREE.Vector3().copy(this._path[1]);
         let geometry = new THREE.BoxGeometry(0.1, 0.05, 0.05);
-        let material = new THREE.MeshBasicMaterial({ color: 0x42f4f4 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
+        let material = new THREE.MeshLambertMaterial({ color: 0x42f4f4 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.name = Name;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);

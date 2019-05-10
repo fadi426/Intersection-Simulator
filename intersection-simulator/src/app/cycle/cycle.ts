@@ -22,9 +22,10 @@ export class Cycle {
         this._currentPoint = new THREE.Vector3().copy(this._path[0]);
         this._nextPoint = new THREE.Vector3().copy(this._path[1]);
         let geometry = new THREE.BoxGeometry(0.07, 0.015, 0.05);
-        let material = new THREE.MeshBasicMaterial({ color: 0xffa500 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
+        let material = new THREE.MeshLambertMaterial({ color: 0xffa500 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
         this._mesh = new THREE.Mesh(geometry, material);
-        this._mesh.name = Name;
+		this._mesh.name = Name;
+		this._mesh.castShadow = true;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);
         this._calculatedNextPosition = new THREE.Vector3().copy(this._path[0]);
         if(this._path[0].y != this._path[1].y){
@@ -68,7 +69,7 @@ export class Cycle {
         
         cycleArr.forEach(cycle => {
             let cycleDistance = cycleFront.distanceTo(cycle._mesh.position);
-            if(cycleDistance < 0.06){
+            if(cycleDistance < 0.06 && this._path == cycle._path){
                 move = false;
             }
         });

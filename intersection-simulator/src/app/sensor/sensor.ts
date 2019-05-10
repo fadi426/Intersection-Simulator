@@ -6,7 +6,7 @@ export class Sensor {
 
     constructor(private _x : number, private _y : number, private _z : number, private _id : number, private _group : number, private _type : String){
         let geometry = new THREE.BoxGeometry(0.02, 0.02, 0.02);
-        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        let material = new THREE.MeshLambertMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.position.set(this._x, this._y, this._z);
         this._sensorGroup = this._group;

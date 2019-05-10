@@ -21,10 +21,11 @@ export class Foot {
         this._pathLight = path.getPathLight;
         this._currentPoint = new THREE.Vector3().copy(this._path[0]);
         this._nextPoint = new THREE.Vector3().copy(this._path[1]);
-        let geometry = new THREE.BoxGeometry(0.015, 0.015, 0.05);
-        let material = new THREE.MeshBasicMaterial({ color: 0xc7ea46 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
+        let geometry = new THREE.BoxGeometry(0.015, 0.015, 0.10);
+        let material = new THREE.MeshLambertMaterial({ color: 0xc7ea46 }); //'#'+(Math.random()*0xFFFFFF<<0).toString(16) });
         this._mesh = new THREE.Mesh(geometry, material);
-        this._mesh.name = Name;
+		this._mesh.name = Name;
+		this._mesh.castShadow = true;
         this._mesh.position.set(this._path[0].x, this._path[0].y, this._path[0].z);
         this._calculatedNextPosition = new THREE.Vector3().copy(this._path[0]);
         if(this._path[0].y != this._path[1].y){
@@ -68,7 +69,7 @@ export class Foot {
         
         footArr.forEach(foot => {
             let footDistance = footFront.distanceTo(foot._mesh.position);
-            if(footDistance < 0.01){
+            if(footDistance < 0.01 && this._path == foot._path){
                 move = false;
             }
         });
