@@ -33,7 +33,7 @@ export class Car {
         }
     }
 
-    public move(trafficLightArr : TrafficLight[], carArr: Car[]){
+    public move(trafficLightArr : TrafficLight[], carArr: Car[], scene, footArr, i){
         if(this._mesh.position.distanceTo(this._path[this._path.length - 1]) < this._respawnDistance){
             this._reachedEnd = true;
         }
@@ -102,7 +102,12 @@ export class Car {
         let direction = nextPoint.sub(this._currentPoint);
         this._calculatedNextPosition.x += direction.x * speed;
         this._calculatedNextPosition.y += direction.y * speed;
-        this._mesh.position.set(this._calculatedNextPosition.x, this._calculatedNextPosition.y, this._calculatedNextPosition.z);
+		this._mesh.position.set(this._calculatedNextPosition.x, this._calculatedNextPosition.y, this._calculatedNextPosition.z);
+		
+		// if(this._reachedEnd){
+		// 	scene.remove(scene.getObjectByName(footArr[i].getMesh.name));
+		// 	footArr.splice(i, 1);
+		// }
     }
 
     public get getMesh(){

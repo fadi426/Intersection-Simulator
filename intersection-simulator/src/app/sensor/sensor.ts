@@ -34,5 +34,37 @@ export class Sensor {
 
     public set setSensorValue(value){
         this._sensorValue = value;
-    }
+	}
+	
+	public checkTriggered(carArr, cycleArr, footArr, vesselArr, mqtt, groupId){
+		let triggered = false;
+			carArr.forEach(car => {
+				if ((Math.abs(car.getMesh.position.x - this.getMesh.position.x) < 0.07) && (Math.abs(car.getMesh.position.y - this.getMesh.position.y) < 0.07) && this.getType == "motor_vehicle") {
+					triggered = true;
+				}
+			});
+			cycleArr.forEach(cycle => {
+				if ((Math.abs(cycle.getMesh.position.x - this.getMesh.position.x) < 0.05) && (Math.abs(cycle.getMesh.position.y - this.getMesh.position.y) < 0.05) && this.getType == "cycle") {
+					triggered = true;
+				}
+			});
+			footArr.forEach(foot => {
+				if ((Math.abs(foot.getMesh.position.x - this.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - this.getMesh.position.y) < 0.05) && this.getType == "foot") {
+					triggered = true;
+				}
+			});
+			vesselArr.forEach(vessel => {
+				if ((Math.abs(vessel.getMesh.position.x - this.getMesh.position.x) < 0.05) && (Math.abs(vessel.getMesh.position.y - this.getMesh.position.y) < 0.05) && this.getType == "vessel") {
+					triggered = true;
+				}
+			});
+			if (triggered && this.getSensorValue == 0) {
+				mqtt.sendMessage("1", groupId + "/" + this.getType + "/" + this.getSensorGroup + "/sensor/" + this.getId);
+				this.setSensorValue = 1;
+			}
+			if (!triggered && this.getSensorValue == 1) {
+				mqtt.sendMessage("0", groupId + "/" + this.getType + "/" + this.getSensorGroup + "/sensor/" + this.getId);
+				this.setSensorValue = 0;
+			}
+	}
 }
