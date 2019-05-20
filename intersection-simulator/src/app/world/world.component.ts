@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { Road } from '../road/road'
 import { Mqtt } from '../mqtt/mqtt';
+import { TweenLite } from 'gsap';
 import { InitTrafficLights } from '../init/initTrafficLights';
 import { InitSensors } from '../init/initSensors';
 import { TrafficUserCreater } from '../trafficUserCreater/trafficUserCreater';
+import { BridgeRoadSensor } from '../bridgeSensors/bridgeRoadSensor';
+import { BridgeWaterSensor } from '../bridgeSensors/bridgeWaterSensor';
 
 @Component({
 	selector: 'app-world',
@@ -27,14 +30,19 @@ var carArr = [];
 var cycleArr = [];
 var footArr = [];
 var vesselArr = [];
-
-var road;
+var bridgeTween;
+var pivot;
 
 var trafficLightArr = [];
 var sensorArr = [];
 var initTrafficLights = new InitTrafficLights;
 var initSensors = new InitSensors;
 var trafficUserCreater = new TrafficUserCreater;
+var bridgeRoadSensor = new BridgeRoadSensor;
+var bridgeWaterSensor = new BridgeWaterSensor;
+
+var roadBridge;
+var bridgeOpen = false;
 
 init();
 animate();
@@ -46,6 +54,23 @@ function setMode(message) {
 			trafficLight.setMode = message.payloadString;
 		}
 	});
+}
+
+function open(){
+	if(!bridgeOpen){
+		bridgeOpen = true;
+		var pos = roadBridge._mesh.position;
+		bridgeTween = TweenLite.to(pos, 5 , {x: pos.x - 1.2, y: pos.y, z: pos.z - 0.01});
+		console.log("open");
+	}
+}
+
+function close(){
+	if(bridgeOpen){
+		bridgeOpen = false;
+		bridgeTween.reverse();
+		console.log("close");
+	}
 }
 
 function init() {
@@ -67,20 +92,36 @@ function init() {
 	pointlight.position.set(4.5, 3, 2);
 	pointlight.shadow.mapSize.height = 4096;
 	pointlight.shadow.mapSize.width = 4096;
-	pointlight.power = 7 * 4 * Math.PI;
+	pointlight.power = 3 * 4 * Math.PI;
 	pointlight.castShadow = true;
 	pointlight.lookAt(new THREE.Vector3(0, 0, 0));
 	scene.add(pointlight);
 
-	//groupID = "8";
+	// groupID = "108";
 	groupID = prompt("Please enter the groupID", "8");
 
 	//MQTT
 	mqtt = new Mqtt("3478945836457", groupID + "/#");
 
 	//Road
-	road = new Road(40, 10, 0.01, 0x808080)
-	scene.add(road.getMesh);
+	let roadLeft = new Road(40, 10, 0.2, 0x808080, -11.15, 0, 0)
+	scene.add(roadLeft.getMesh);
+
+	let roadRight = new Road(10, 10, 0.2, 0x808080, 14.75, 0, 0)
+	scene.add(roadRight.getMesh);
+
+	roadBridge = new Road(0.9, 1.2, 0.08, 0x808080, 9.3, -0.27, 0)
+	// var pos = roadBridge.getMesh.position;
+	// console.log(pos);
+	// pivot = new THREE.Object3D();
+	// pivot.position.set({x: pos.x, y: pos.y, z: pos.z});
+	// pivot.position.x -= 0.6;
+	// pivot.add(roadBridge.getMesh);
+	// scene.add(pivot);
+	scene.add(roadBridge.getMesh);
+
+	let roadWater = new Road(0.9, 10, 0.01, 0x0f5e9c, 9.3, 0, -0.2)
+	scene.add(roadWater.getMesh);
 
 	//Create TrafficLights
 	trafficLightArr = initTrafficLights.getTrafficLights();
@@ -108,7 +149,19 @@ function animate() {
 	//Process incoming messages
 	if (mqtt.getMessage != []) {
 		while (mqtt.getMessage.length != 0) {
-			setMode(mqtt.getMessage.shift());
+			let mqttMessage = mqtt.getMessage.shift();
+			let destination = mqttMessage.destinationName.split("/");
+			if(destination[1] == "bridge" && destination[3] == "deck"){
+				if(mqttMessage.payloadString == "0"){
+					open();
+				}
+				else{
+					close();
+				}
+			}
+			else{
+				setMode(mqttMessage);
+			}
 		}
 	}
 
@@ -155,6 +208,9 @@ function animate() {
 			vesselArr.splice(i, 1);
 		}
 	}
+
+	bridgeRoadSensor.checkSensor(groupID, mqtt, carArr, cycleArr, footArr);
+	bridgeWaterSensor.checkSensor(groupID, mqtt, vesselArr);
 
 	//Create TrafficUsers
 	trafficUserCreater.createTrafficUsers(carArr, cycleArr, footArr, vesselArr, scene);

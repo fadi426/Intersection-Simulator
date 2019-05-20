@@ -22,7 +22,7 @@ export class TrafficUserCreater {
 		}
 
 		this.cycleCreatorCounter += 0.01
-		if (this.cycleCreatorCounter > 10 && cycleArr.length < 500) {
+		if (this.cycleCreatorCounter > 10 && cycleArr.length < 20) {
 			let cycle = new Cycle(this.names++, this.paths.getRandomCyclePath());
 			cycleArr.push(cycle);
 			scene.add(cycle.getMesh);
@@ -30,7 +30,7 @@ export class TrafficUserCreater {
 		}
 
 		this.footCreatorCounter += 0.01
-		if (this.footCreatorCounter > 5 && footArr.length < 500) {
+		if (this.footCreatorCounter > 5 && footArr.length < 20) {
 			let foot = new Foot(this.names++, this.paths.getRandomFootPath());
 			footArr.push(foot);
 			scene.add(foot.getMesh);
@@ -38,7 +38,7 @@ export class TrafficUserCreater {
 		}
 
 		this.vesselCreatorCounter += 0.01
-		if (this.vesselCreatorCounter > 15 && vesselArr.length < 500) {
+		if (this.vesselCreatorCounter > 15 && vesselArr.length < 5) {
 			let vessel = new Vessel(this.names++, this.paths.getRandomVesselPath());
 			vesselArr.push(vessel);
 			scene.add(vessel.getMesh);

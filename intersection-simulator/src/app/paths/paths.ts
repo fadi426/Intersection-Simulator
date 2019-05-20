@@ -3,6 +3,7 @@ import * as THREE from 'three';
 export class Paths {
 
 	private height = 0.013;
+	private vesselHeight = -0.2;
 	private footHeight = 0.001;
 
     private carPathArr = [];
@@ -43,8 +44,8 @@ export class Paths {
         this.footPathArr.push(new path([new THREE.Vector3(-0.60, -5.0, this.footHeight), new THREE.Vector3(-0.60, 2.0, this.footHeight)], [[7,1],[8,1]]));
 		this.footPathArr.push(new path([new THREE.Vector3(-0.66, 5.0, this.footHeight), new THREE.Vector3(-0.66, -2.0, this.footHeight)], [[7,2],[8,2]]));
 		
-		this.vesselPathArr.push(new path([new THREE.Vector3(9.2, 3.0, this.height), new THREE.Vector3(9.2, -3.0, this.height)], [[2,1]]));
-		this.vesselPathArr.push(new path([new THREE.Vector3(9.4, -3.0, this.height), new THREE.Vector3(9.4, 3.0, this.height)], [[1,1]]));
+		this.vesselPathArr.push(new path([new THREE.Vector3(9.2, 3.0, this.vesselHeight), new THREE.Vector3(9.2, -3.0, this.vesselHeight)], [[2,1]]));
+		this.vesselPathArr.push(new path([new THREE.Vector3(9.4, -3.0, this.vesselHeight), new THREE.Vector3(9.4, 3.0, this.vesselHeight)], [[1,1]]));
     }
 
     public getRandomCarPath(){

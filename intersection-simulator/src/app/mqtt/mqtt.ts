@@ -42,7 +42,7 @@ export class Mqtt {
 
     public onMessageArrived() {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
-            if(message.destinationName.includes("light")){
+            if(message.destinationName.includes("light") || message.destinationName.includes("deck")){
 				this._message.push(message);
 				if(message.payloadString == "0"){
 					console.log("%c" + message.destinationName + " " + message.payloadString, 'color: #ff0000');

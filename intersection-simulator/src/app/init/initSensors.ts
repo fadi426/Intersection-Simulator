@@ -73,8 +73,8 @@ export class InitSensors {
 	this.sensorArr.push(new Sensor(-0.66, 0.06, 0, 2, 7, "foot"));
 	this.sensorArr.push(new Sensor(-0.66, 0.48, 0, 2, 8, "foot"));
 
-	this.sensorArr.push(new Sensor(9.4, -0.99, 0, 1, 1, "vessel"));
-	this.sensorArr.push(new Sensor(9.2, 0.43, 0, 1, 2, "vessel"));
+	this.sensorArr.push(new Sensor(9.4, -0.99, -0.2, 1, 1, "vessel"));
+	this.sensorArr.push(new Sensor(9.2, 0.43, -0.2, 1, 2, "vessel"));
 	}
 
 	public getSensors() {
