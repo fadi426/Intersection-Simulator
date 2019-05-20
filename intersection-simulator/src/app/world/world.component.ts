@@ -48,12 +48,24 @@ init();
 animate();
 
 function setMode(message) {
+	let destination = message.destinationName.split("/");
 	trafficLightArr.forEach(trafficLight => {
-		let destination = message.destinationName.split("/");
 		if (trafficLight.getGroup == destination[1] && trafficLight.getGroupId == destination[2] && trafficLight.getId == destination[4]) {
 			trafficLight.setMode = message.payloadString;
-		}
+		}108
 	});
+	if(destination[1] == "bridge" && destination[3] == "deck"){
+		trafficLightArr[trafficLightArr.length - 1].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 2].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 3].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 4].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 5].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 6].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 7].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 8].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 9].setmode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 10].setmode = message.payloadString;
+	}
 }
 
 function open(){
@@ -101,7 +113,7 @@ function init() {
 	groupID = prompt("Please enter the groupID", "8");
 
 	//MQTT
-	mqtt = new Mqtt("3478945836457", groupID + "/#");
+	mqtt = new Mqtt("3478945838475837745874834875734858436457", groupID + "/#");
 
 	//Road
 	let roadLeft = new Road(40, 10, 0.2, 0x808080, -11.15, 0, 0)
@@ -143,6 +155,8 @@ function init() {
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.body.appendChild(renderer.domElement);
+
+	// open();
 }
 
 function animate() {
