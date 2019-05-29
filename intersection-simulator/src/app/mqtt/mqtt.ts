@@ -6,11 +6,11 @@ export class Mqtt {
     private _message = [];
 
     constructor(private _clientId: string, private _groupId: string) {
-        this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId);
+		this._client = new Paho.MQTT.Client("wss://broker.0f.nl:8084/", this._clientId,);
         this.onConnectionLost();
         this.onMessageArrived();
-        this.connect();
-    }
+		this.connect();
+	}
 
     public get getConnected() {
         return this._connected;
@@ -21,24 +21,24 @@ export class Mqtt {
     }
 
     public connect() {
-        this._client.connect({ onSuccess: this.onConnect.bind(this) });
+		let newWillMessage = new Paho.MQTT.Message("hallo");
+		newWillMessage.destinationName = this._groupId[0] + "/features/lifecycle/simulator/ondisconnect";
+		newWillMessage.qos = 1;
+		newWillMessage.retained = false;
+		console.log(newWillMessage.destinationName);
+		this._client.connect({ onSuccess: this.onConnect.bind(this) });
     }
 
     public onConnect() {
         console.log("Connected");
         var subscribeOptions = {
-            qos: 0,  // QoS
-            invocationContext: { foo: true },  // Passed to success / failure callback
-        };
+            qos: 0,
+            invocationContext: { foo: true },
+		};
         this._client.subscribe(this._groupId, subscribeOptions);
 		this._connected = true;
 
 		this.sendMessage("", this._groupId[0] + "/features/lifecycle/simulator/onconnect");
-		
-		// this.sendMessage("", this._groupId + "features/lifecycle/simulator/onconnect");
-		// let message = new Paho.MQTT.Message("1");
-        // message.destinationName = this._groupId + "features/lifecycle/simulator/onconnect";
-        // this._client.send(message);
     }
 
     public sendMessage(msg : string, des: string) {
@@ -51,7 +51,7 @@ export class Mqtt {
         this._client.onMessageArrived = (message: Paho.MQTT.Message) => {
 			if(message.destinationName.includes("light") 
 			|| message.destinationName.includes("deck") 
-			|| message.destinationName.includes("onconnect") 
+			|| message.destinationName.includes("connect") 
 			|| message.destinationName.includes("gate")){
 				this._message.push(message);
 				if(message.payloadString == "0"){

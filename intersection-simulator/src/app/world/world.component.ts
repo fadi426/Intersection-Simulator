@@ -85,7 +85,7 @@ function open() {
 	if (!bridgeOpen) {
 		bridgeOpen = true;
 		var pos = roadBridge._mesh.position;
-		bridgeTween = TweenLite.to(pos, 5, { x: pos.x - 1.2, y: pos.y, z: pos.z - 0.01 });
+		bridgeTween = TweenLite.to(pos, 9, { x: pos.x - 1.2, y: pos.y, z: pos.z - 0.01 });
 	}
 }
 
@@ -203,16 +203,16 @@ function init() {
 	let roadWater = new Road(0.9, 10, 0.01, 0x0f5e9c, 9.3, 0, -0.2)
 	scene.add(roadWater.getMesh);
 
-	roadGate1 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, 0.1, -0.01)
+	roadGate1 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, 0.1, -0.01)
 	scene.add(roadGate1.getMesh);
 
-	roadGate2 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, 0.1, -0.01)
+	roadGate2 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, 0.1, -0.01)
 	scene.add(roadGate2.getMesh);
 
-	roadGate3 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, -0.6, -0.01)
+	roadGate3 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, -0.6, -0.01)
 	scene.add(roadGate3.getMesh);
 	
-	roadGate4 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, -0.6, -0.010)
+	roadGate4 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, -0.6, -0.010)
 	scene.add(roadGate4.getMesh);
 
 	//Create TrafficLights

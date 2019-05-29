@@ -2,8 +2,8 @@ export class BridgeWaterSensor {
 	private sensorValue = 0;
 	private left = 8.8;
 	private right = 9.8;
-	private top = 0.33;
-	private bottom = -0.87;
+	private top = 0.35;
+	private bottom = -0.91;
 
 	checkSensor(groupId, mqtt, vesselArr){
 		let triggered = false;
