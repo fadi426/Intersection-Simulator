@@ -31,7 +31,6 @@ var cycleArr = [];
 var footArr = [];
 var vesselArr = [];
 var bridgeTween;
-var pivot;
 
 var trafficLightArr = [];
 var sensorArr = [];
@@ -43,6 +42,16 @@ var bridgeWaterSensor = new BridgeWaterSensor;
 
 var roadBridge;
 var bridgeOpen = false;
+var roadGate1;
+var roadGate2;
+var roadGate3;
+var roadGate4;
+var gate1Open = false;
+var gate2Open = false;
+var gate1Tween;
+var gate2Tween;
+var gate3Tween;
+var gate4Tween;
 
 init();
 animate();
@@ -52,37 +61,103 @@ function setMode(message) {
 	trafficLightArr.forEach(trafficLight => {
 		if (trafficLight.getGroup == destination[1] && trafficLight.getGroupId == destination[2] && trafficLight.getId == destination[4]) {
 			trafficLight.setMode = message.payloadString;
-		}108
+		}
 	});
-	if(destination[1] == "bridge" && destination[3] == "light"){
-		trafficLightArr[trafficLightArr.length - 1].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 2].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 3].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 4].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 5].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 6].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 7].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 8].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 9].setmode = message.payloadString;
-		trafficLightArr[trafficLightArr.length - 10].setmode = message.payloadString;
+	if (destination[1] == "bridge" && destination[3] == "light") {
+		trafficLightArr[trafficLightArr.length - 1].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 2].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 3].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 4].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 5].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 6].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 7].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 8].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 9].setMode = message.payloadString;
+		trafficLightArr[trafficLightArr.length - 10].setMode = message.payloadString;
+	}
+	if (destination[1] == "features", destination[2] == "lifecycle", destination[4] == "onconnect", destination[3] == "controller") {
+		resetWorld();
+		console.log("reset");
 	}
 }
 
-function open(){
-	if(!bridgeOpen){
+function open() {
+	if (!bridgeOpen) {
 		bridgeOpen = true;
 		var pos = roadBridge._mesh.position;
-		bridgeTween = TweenLite.to(pos, 5 , {x: pos.x - 1.2, y: pos.y, z: pos.z - 0.01});
-		console.log("open");
+		bridgeTween = TweenLite.to(pos, 9, { x: pos.x - 1.2, y: pos.y, z: pos.z - 0.01 });
 	}
 }
 
-function close(){
-	if(bridgeOpen){
+function close() {
+	if (bridgeOpen) {
 		bridgeOpen = false;
 		bridgeTween.reverse();
-		console.log("close");
 	}
+}
+
+function openGate1() {
+	if (!gate1Open) {
+		gate1Open = true;
+		var pos = roadGate1._mesh.position;
+		gate1Tween = TweenLite.to(pos, 2, { x: pos.x, y: pos.y, z: pos.z + 0.2 });
+		pos = roadGate3._mesh.position;
+		gate3Tween = TweenLite.to(pos, 2, { x: pos.x, y: pos.y, z: pos.z + 0.2 });
+	}
+}
+
+function openGate2() {
+	if (!gate2Open) {
+		gate2Open = true;
+		var pos = roadGate2._mesh.position;
+		gate2Tween = TweenLite.to(pos, 2, { x: pos.x, y: pos.y, z: pos.z + 0.2 });
+		pos = roadGate4._mesh.position;
+		gate4Tween = TweenLite.to(pos, 2, { x: pos.x, y: pos.y, z: pos.z + 0.2 });
+	}
+}
+
+function closeGate1() {
+	if (gate1Open) {
+		gate1Open = false;
+		gate1Tween.reverse();
+		gate3Tween.reverse();
+	}
+}
+
+function closeGate2() {
+	if (gate2Open) {
+		gate2Open = false;
+		gate2Tween.reverse();
+		gate4Tween.reverse();
+	}
+}
+
+function resetWorld() {
+	carArr.forEach(car => {
+		scene.remove(scene.getObjectByName(car.getMesh.name));
+	});
+	carArr = [];
+	footArr.forEach(foot => {
+		scene.remove(scene.getObjectByName(foot.getMesh.name));
+	});
+	footArr = [];
+	cycleArr.forEach(cycle => {
+		scene.remove(scene.getObjectByName(cycle.getMesh.name));
+	});
+	cycleArr = [];
+	vesselArr.forEach(vessel => {
+		scene.remove(scene.getObjectByName(vessel.getMesh.name));
+	});
+	vesselArr = [];
+	sensorArr.forEach(sensor => {
+		sensor.setMode = 0;
+	});
+	trafficLightArr.forEach(trafficLight => {
+		trafficLight.setMode = trafficLight.getInitialMode;
+	});
+	close();
+	closeGate1();
+	closeGate2();
 }
 
 function init() {
@@ -123,17 +198,22 @@ function init() {
 	scene.add(roadRight.getMesh);
 
 	roadBridge = new Road(0.9, 1.2, 0.08, 0x808080, 9.3, -0.27, 0)
-	// var pos = roadBridge.getMesh.position;
-	// console.log(pos);
-	// pivot = new THREE.Object3D();
-	// pivot.position.set({x: pos.x, y: pos.y, z: pos.z});
-	// pivot.position.x -= 0.6;
-	// pivot.add(roadBridge.getMesh);
-	// scene.add(pivot);
 	scene.add(roadBridge.getMesh);
 
 	let roadWater = new Road(0.9, 10, 0.01, 0x0f5e9c, 9.3, 0, -0.2)
 	scene.add(roadWater.getMesh);
+
+	roadGate1 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, 0.1, -0.01)
+	scene.add(roadGate1.getMesh);
+
+	roadGate2 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, 0.1, -0.01)
+	scene.add(roadGate2.getMesh);
+
+	roadGate3 = new Road(0.02, 0.5, 0.2, 0x404040, 8.7, -0.6, -0.01)
+	scene.add(roadGate3.getMesh);
+	
+	roadGate4 = new Road(0.02, 0.5, 0.2, 0x404040, 9.9, -0.6, -0.010)
+	scene.add(roadGate4.getMesh);
 
 	//Create TrafficLights
 	trafficLightArr = initTrafficLights.getTrafficLights();
@@ -155,8 +235,6 @@ function init() {
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.body.appendChild(renderer.domElement);
-
-	// open();
 }
 
 function animate() {
@@ -165,15 +243,33 @@ function animate() {
 		while (mqtt.getMessage.length != 0) {
 			let mqttMessage = mqtt.getMessage.shift();
 			let destination = mqttMessage.destinationName.split("/");
-			if(destination[1] == "bridge" && destination[3] == "deck"){
-				if(mqttMessage.payloadString == "0"){
+			if (destination[1] == "bridge" && destination[3] == "deck") {
+				if (mqttMessage.payloadString == "0") {
 					open();
 				}
-				else{
+				else {
 					close();
 				}
 			}
-			else{
+			else if(destination[1] == "bridge" && destination[3] == "gate"){
+				if(destination[4] == "1"){
+					if(mqttMessage.payloadString == "1"){
+						openGate1();
+					}
+					else{
+						closeGate1();
+					}
+				}
+				else if(destination[4] == "2"){
+					if(mqttMessage.payloadString == "1"){
+						openGate2();
+					}
+					else{
+						closeGate2();
+					}
+				}
+			}
+			else {
 				setMode(mqttMessage);
 			}
 		}
@@ -208,7 +304,7 @@ function animate() {
 	}
 
 	for (let i = footArr.length - 1; i > -1; i--) {
-		footArr[i].move(trafficLightArr, footArr,);
+		footArr[i].move(trafficLightArr, footArr);
 		if (footArr[i].getReachedEnd) {
 			scene.remove(scene.getObjectByName(footArr[i].getMesh.name));
 			footArr.splice(i, 1);

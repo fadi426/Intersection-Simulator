@@ -1,13 +1,15 @@
 import * as THREE from 'three';
 export class TrafficLight {
-    private _mesh : any;
+	private _mesh : any;
+	private _initialMode : number;
 
     constructor(private _x : number, private _y : number, private _z : number, private _id : number, private groupId, private group : string, private _rotation : number, private _mode: number){
         let geometry = new THREE.BoxGeometry(0.015, 0.1, 0.02);
         let material = new THREE.MeshLambertMaterial({ color: 0x0000ff });
         this._mesh = new THREE.Mesh(geometry, material);
         this._mesh.position.set(this._x, this._y, this._z);
-        this._mesh.rotation.z = this._rotation;
+		this._mesh.rotation.z = this._rotation;
+		this._initialMode = this._mode;
     }
 
     public get getMesh(){
@@ -28,7 +30,11 @@ export class TrafficLight {
 
     public get getGroup() {
         return this.group;
-    }
+	}
+	
+	public get getInitialMode() {
+		return this._initialMode;
+	}
 
     public set setMode(value){
         this._mode = value;
