@@ -14,7 +14,7 @@ export class TrafficUserCreater {
 
 	createTrafficUsers(carArr, cycleArr, footArr, vesselArr, scene) {
 		this.carCreatorCounter += 0.01
-		if (this.carCreatorCounter > 0.3 && carArr.length < 150) {
+		if (this.carCreatorCounter > 0.3 && carArr.length < 300) {
 			let car = new Car(this.names++, this.paths.getRandomCarPath());
 			carArr.push(car);
 			scene.add(car.getMesh);

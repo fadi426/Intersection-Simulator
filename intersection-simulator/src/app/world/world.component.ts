@@ -54,7 +54,7 @@ function setMode(message) {
 			trafficLight.setMode = message.payloadString;
 		}108
 	});
-	if(destination[1] == "bridge" && destination[3] == "deck"){
+	if(destination[1] == "bridge" && destination[3] == "light"){
 		trafficLightArr[trafficLightArr.length - 1].setmode = message.payloadString;
 		trafficLightArr[trafficLightArr.length - 2].setmode = message.payloadString;
 		trafficLightArr[trafficLightArr.length - 3].setmode = message.payloadString;
