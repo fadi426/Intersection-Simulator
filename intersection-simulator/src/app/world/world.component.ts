@@ -188,7 +188,7 @@ function init() {
 	groupID = prompt("Please enter the groupID", "8");
 
 	//MQTT
-	mqtt = new Mqtt("3478945838475837745874834875734858436457", groupID + "/#");
+	mqtt = new Mqtt("3478945838475874834875734858436457", groupID + "/#");
 
 	//Road
 	let roadLeft = new Road(40, 10, 0.2, 0x808080, -11.15, 0, 0)

@@ -21,11 +21,14 @@ export class Mqtt {
     }
 
     public connect() {
-		let newWillMessage = new Paho.MQTT.Message("");
-		newWillMessage.destinationName = this._groupId[0] + "/features/lifecycle/simulator/ondisconnect";
+        let newWillMessage = new Paho.MQTT.Message("");
+        let id = "";
+        for (let index = 0; index < this._groupId.length - 2; index++) {
+            id += this._groupId[index];            
+        }
+		newWillMessage.destinationName = id + "/features/lifecycle/simulator/ondisconnect";
 		newWillMessage.qos = 1;
 		newWillMessage.retained = false;
-		console.log(newWillMessage.destinationName);
 		this._client.connect({ onSuccess: this.onConnect.bind(this), willMessage: newWillMessage });
     }
 
@@ -38,7 +41,12 @@ export class Mqtt {
         this._client.subscribe(this._groupId, subscribeOptions);
 		this._connected = true;
 
-		this.sendMessage("", this._groupId[0] + "/features/lifecycle/simulator/onconnect");
+        let id = "";
+        for (let index = 0; index < this._groupId.length - 2; index++) {
+            id += this._groupId[index];            
+        }
+
+		this.sendMessage("", id + "/features/lifecycle/simulator/onconnect");
     }
 
     public sendMessage(msg : string, des: string) {
