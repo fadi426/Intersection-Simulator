@@ -21,12 +21,12 @@ export class Mqtt {
     }
 
     public connect() {
-		let newWillMessage = new Paho.MQTT.Message("hallo");
+		let newWillMessage = new Paho.MQTT.Message("");
 		newWillMessage.destinationName = this._groupId[0] + "/features/lifecycle/simulator/ondisconnect";
 		newWillMessage.qos = 1;
 		newWillMessage.retained = false;
 		console.log(newWillMessage.destinationName);
-		this._client.connect({ onSuccess: this.onConnect.bind(this) });
+		this._client.connect({ onSuccess: this.onConnect.bind(this), willMessage: newWillMessage });
     }
 
     public onConnect() {

@@ -5,16 +5,16 @@ import { Vessel } from '../vessel/vessel';
 import { Paths } from '../paths/paths';
 
 export class TrafficUserCreater {
-	private carCreatorCounter = 0;
-	private cycleCreatorCounter = 0;
-	private footCreatorCounter = 0;
-	private vesselCreatorCounter = 0;
+	private carCreatorCounter = 0.30;
+	private cycleCreatorCounter = 10;
+	private footCreatorCounter = 5;
+	private vesselCreatorCounter = 30;
 	private paths = new Paths;
 	private names = 1;
 
 	createTrafficUsers(carArr, cycleArr, footArr, vesselArr, scene) {
 		this.carCreatorCounter += 0.01
-		if (this.carCreatorCounter > 0.3 && carArr.length < 300) {
+		if (this.carCreatorCounter > 0.30 && carArr.length < 1000) {
 			let car = new Car(this.names++, this.paths.getRandomCarPath());
 			carArr.push(car);
 			scene.add(car.getMesh);
@@ -38,7 +38,7 @@ export class TrafficUserCreater {
 		}
 
 		this.vesselCreatorCounter += 0.01
-		if (this.vesselCreatorCounter > 15 && vesselArr.length < 5) {
+		if (this.vesselCreatorCounter > 30 && vesselArr.length < 5) {
 			let vessel = new Vessel(this.names++, this.paths.getRandomVesselPath());
 			vesselArr.push(vessel);
 			scene.add(vessel.getMesh);

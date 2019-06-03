@@ -14,18 +14,18 @@ export class Paths {
     constructor(){
         this.carPathArr.push(new path([new THREE.Vector3(-0.35, 5.0, this.height), new THREE.Vector3(-0.35, 0.35, this.height), new THREE.Vector3(-2, 0.35, this.height)], [[1,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(-0.21, 5.0, this.height), new THREE.Vector3(-0.21, -2.0, this.height)], [[2,1]]));
-        this.carPathArr.push(new path([new THREE.Vector3(-0.07, 5.0, this.height), new THREE.Vector3(-0.07, -0.49, this.height), new THREE.Vector3(11.0, -0.49, this.height)], [[3,1],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(-0.07, 5.0, this.height), new THREE.Vector3(-0.07, -0.49, this.height), new THREE.Vector3(16.0, -0.49, this.height)], [[3,1],[13,2]]));
         this.carPathArr.push(new path([new THREE.Vector3(16.0, -0.07, this.height),new THREE.Vector3(8.6, -0.07, this.height),new THREE.Vector3(6.0, -0.07, this.height),new THREE.Vector3(5.0, 0.35, this.height), new THREE.Vector3(0.35, 0.35, this.height), new THREE.Vector3(0.35, 2.0, this.height)], [[4,1],[13,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(16.0, -0.07, this.height),new THREE.Vector3(8.6, -0.07, this.height),new THREE.Vector3(6.0, -0.07, this.height),new THREE.Vector3(5.0, 0.21, this.height), new THREE.Vector3(0.35, 0.21, this.height), new THREE.Vector3(-0.49, 0.35, this.height), new THREE.Vector3(-2.0, 0.35, this.height)], [[5,1],[13,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(16.0, -0.07, this.height),new THREE.Vector3(8.6, -0.07, this.height),new THREE.Vector3(6.0, -0.07, this.height),new THREE.Vector3(5.0, 0.07, this.height), new THREE.Vector3(0.35, 0.07, this.height), new THREE.Vector3(-0.49, 0.21, this.height), new THREE.Vector3(-2.0, 0.21, this.height)], [[5,2],[13,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(16.0, -0.07, this.height),new THREE.Vector3(6.0, -0.07, this.height),new THREE.Vector3(5.0, -0.07, this.height), new THREE.Vector3(0.35, -0.07, this.height), new THREE.Vector3(-0.21, -0.28, this.height), new THREE.Vector3(-0.21, -2.0, this.height)], [[6,1],[13,1]]));
-        this.carPathArr.push(new path([new THREE.Vector3(0.35, -5.0, this.height), new THREE.Vector3(0.35, -0.49, this.height), new THREE.Vector3(11.0, -0.49, this.height)], [[7,1],[13,2]]));
-        this.carPathArr.push(new path([new THREE.Vector3(0.21, -5.0, this.height), new THREE.Vector3(0.21, -0.35, this.height), new THREE.Vector3(2.0, -0.35, this.height), new THREE.Vector3(2.2, -0.49, this.height), new THREE.Vector3(11.0, -0.49, this.height)], [[7,2],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(0.35, -5.0, this.height), new THREE.Vector3(0.35, -0.49, this.height), new THREE.Vector3(16.0, -0.49, this.height)], [[7,1],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(0.21, -5.0, this.height), new THREE.Vector3(0.21, -0.35, this.height), new THREE.Vector3(2.0, -0.35, this.height), new THREE.Vector3(2.2, -0.49, this.height), new THREE.Vector3(16.0, -0.49, this.height)], [[7,2],[13,2]]));
         this.carPathArr.push(new path([new THREE.Vector3(0.07, -5.0, this.height), new THREE.Vector3(0.07, -0.49, this.height), new THREE.Vector3(0.35, 0.35, this.height), new THREE.Vector3(0.35, 2.0, this.height)], [[8,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.49, this.height), new THREE.Vector3(-0.21, -0.49, this.height), new THREE.Vector3(-0.21, -2.0, this.height)], [[9,1]]));
-        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.35, this.height), new THREE.Vector3(-0.35, -0.35, this.height), new THREE.Vector3(0.35, -0.49, this.height), new THREE.Vector3(11.0, -0.49, this.height)], [[10,1],[13,2]]));
-        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.21, this.height), new THREE.Vector3(-0.35, -0.21, this.height), new THREE.Vector3(0.35, -0.35, this.height), new THREE.Vector3(2.0, -0.35, this.height), new THREE.Vector3(2.2, -0.49, this.height), new THREE.Vector3(11.0, -0.49, this.height)], [[10,2],[13,2]]));
-        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.07, this.height), new THREE.Vector3(-0.35, -0.07, this.height), new THREE.Vector3(0.35, 0.21), new THREE.Vector3(0.35, 2.0, this.height)], [[11,1],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.35, this.height), new THREE.Vector3(-0.35, -0.35, this.height), new THREE.Vector3(0.35, -0.49, this.height), new THREE.Vector3(16.0, -0.49, this.height)], [[10,1],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.21, this.height), new THREE.Vector3(-0.35, -0.21, this.height), new THREE.Vector3(0.35, -0.35, this.height), new THREE.Vector3(2.0, -0.35, this.height), new THREE.Vector3(2.2, -0.49, this.height), new THREE.Vector3(16.0, -0.49, this.height)], [[10,2],[13,2]]));
+        this.carPathArr.push(new path([new THREE.Vector3(-5.0, -0.07, this.height), new THREE.Vector3(-0.35, -0.07, this.height), new THREE.Vector3(0.35, 0.21), new THREE.Vector3(0.35, 2.0, this.height)], [[11,1]]));
         //this.carPathArr.push(new path([new THREE.Vector3(0.07, -5.0, this.height), new THREE.Vector3(0.07, 0.35, this.height), new THREE.Vector3(-2.0, 0.35, this.height)], [[8,1]]));
         this.carPathArr.push(new path([new THREE.Vector3(0.76, -5.0, this.height), new THREE.Vector3(0.76, -0.91, this.height), new THREE.Vector3(-0.21, -0.91, this.height), new THREE.Vector3(-0.21, -2.0, this.height)], [[12,1]]));
 
@@ -35,12 +35,12 @@ export class Paths {
         this.cyclePathArr.push(new path([new THREE.Vector3(-5.0, -0.63, this.height), new THREE.Vector3(2.0, -0.63, this.height)], [[3,1]]));
         this.cyclePathArr.push(new path([new THREE.Vector3(-0.49, 5.0, this.height), new THREE.Vector3(-0.49, -2.0, this.height)], [[4,1]]));
 
-        this.footPathArr.push(new path([new THREE.Vector3(-5.0, 0.60, this.footHeight), new THREE.Vector3(2.0, 0.60, this.footHeight)], [[1,1],[2,1]]));
-        this.footPathArr.push(new path([new THREE.Vector3(5.0, 0.66, this.footHeight), new THREE.Vector3(-2.0, 0.66, this.footHeight)], [[1,2],[2,2]]));
+        this.footPathArr.push(new path([new THREE.Vector3(-5.0, 0.60, this.footHeight), new THREE.Vector3(7.0, 0.60, this.footHeight), new THREE.Vector3(8.0, 0.18, this.footHeight), new THREE.Vector3(16.0, 0.18, this.footHeight)], [[1,1],[2,1],[9,3]]));
+        this.footPathArr.push(new path([new THREE.Vector3(16.0, 0.22, this.footHeight), new THREE.Vector3(8.0, 0.22, this.footHeight), new THREE.Vector3(7.0, 0.66, this.footHeight), new THREE.Vector3(-2.0, 0.66, this.footHeight)], [[1,2],[2,2],[9,1]]));
         this.footPathArr.push(new path([new THREE.Vector3(0.60, 5.0, this.footHeight), new THREE.Vector3(0.60, -2.0, this.footHeight)], [[3,1],[4,1]]));
         this.footPathArr.push(new path([new THREE.Vector3(0.66, -5.0, this.footHeight), new THREE.Vector3(0.66, 2.0, this.footHeight)], [[3,2],[4,2]]));
-        this.footPathArr.push(new path([new THREE.Vector3(5.0, -0.74, this.footHeight), new THREE.Vector3(-2.0, -0.74, this.footHeight)], [[5,1],[6,1]]));
-        this.footPathArr.push(new path([new THREE.Vector3(-5.0, -0.80, this.footHeight), new THREE.Vector3(2.0, -0.80, this.footHeight)], [[5,2],[6,2]]));
+        this.footPathArr.push(new path([new THREE.Vector3(16.0, -0.74, this.footHeight), new THREE.Vector3(-2.0, -0.74, this.footHeight)], [[5,1],[6,1],[9,4]]));
+        this.footPathArr.push(new path([new THREE.Vector3(-5.0, -0.80, this.footHeight), new THREE.Vector3(16.0, -0.80, this.footHeight)], [[5,2],[6,2],[9,2]]));
         this.footPathArr.push(new path([new THREE.Vector3(-0.60, -5.0, this.footHeight), new THREE.Vector3(-0.60, 2.0, this.footHeight)], [[7,1],[8,1]]));
 		this.footPathArr.push(new path([new THREE.Vector3(-0.66, 5.0, this.footHeight), new THREE.Vector3(-0.66, -2.0, this.footHeight)], [[7,2],[8,2]]));
 		

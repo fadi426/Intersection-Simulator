@@ -62,7 +62,7 @@ export class Foot {
                 }
             });
             let distanceToLight = footFront.distanceTo(trafficLight.getMesh.position);
-            if(!(distanceToLight > 0.0303 || trafficLight.getMode == 2)){
+            if(!(distanceToLight > 0.033 || trafficLight.getMode == 2)){
                 move = false;
             }
         }

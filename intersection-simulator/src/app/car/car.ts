@@ -62,7 +62,7 @@ export class Car {
                 }
             });
             let distanceToLight = carFront.distanceTo(trafficLight.getMesh.position);
-            if(!(distanceToLight > 0.02 || trafficLight.getMode == 2)){
+            if(!(distanceToLight > 0.023 || trafficLight.getMode == 2)){
                 move = false;
             }
         }

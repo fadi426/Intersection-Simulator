@@ -49,7 +49,7 @@ export class Sensor {
 				}
 			});
 			footArr.forEach(foot => {
-				if ((Math.abs(foot.getMesh.position.x - this.getMesh.position.x) < 0.05) && (Math.abs(foot.getMesh.position.y - this.getMesh.position.y) < 0.05) && this.getType == "foot") {
+				if ((Math.abs(foot.getMesh.position.x - this.getMesh.position.x) < 0.035) && (Math.abs(foot.getMesh.position.y - this.getMesh.position.y) < 0.035) && this.getType == "foot") {
 					triggered = true;
 				}
 			});
